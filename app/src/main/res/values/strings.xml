@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Quick Setup Guide for Cutting Plotter</string>
+
+    <string name="papelopaline">Opaline Paper</string>
+    <string name="papellinho">Linen Paper</string>
+    <string name="papelverge">Verge Paper</string>
+
+    <string name="canson">Canson</string>
+    <string name="chamex">Chamex</string>
+    <string name="spiral">Spiral</string>
+
+    <string name="roxo">Purple</string>
+    <string name="turquesa">Turquoise</string>
+
+    <string name="superforte">Super Strong</string>
+    <string name="standard">Standard</string>
+
+    <string name="delicado">Delicate</string>
+    <string name="pesado">Heavy</string>
+    <string name="title_activity_lista_processo">ProcessListActivity</string>
+
+    <string name="cortepesado">Heavy Cutting\n</string>
+    <string name="cortedelicado">Delicate Cutting</string>
+    <string name="menu_item_adicionar">Add</string>
+    <string name="contrext_menu_item_editar">Edit</string>
+    <string name="context_menu_item_excluir">Delete</string>
+    <string name="menu_item_salvar">Save</string>
+    <string name="menu_item_limpar">Clear</string>
+    <string name="descricaoapp">App for quick consultation of configuration parameters for the cutting plotter according to the desired material and process</string>
+    <string name="autor">Author:</string>
+    <string name="nomeautor">Guilherme Pires Groff Benedeti</string>
+    <string name="cursolabel">Course:</string>
+    <string name="nomecurso">Specialization in Java Development</string>
+    <string name="labelemail">Email:</string>
+    <string name="emailautor">guilherme.benedeti@utfpr.edu.br</string>
+    <string name="labelmaterial">Material</string>
+    <string name="labelgramatura">Weight:</string>
+    <string name="labelmarca">Brand</string>
+    <string name="labelprocesso">Process</string>
+    <string name="labelpressaferramenta">Tool Pressure</string>
+    <string name="labeltipoprocesso">Process Type</string>
+    <string name="labelcorte">Cutting</string>
+    <string name="labeldesenho">Design</string>
+    <string name="labeltapete">Mat</string>
+    <string name="labelprofundidadelamina">Blade Depth</string>
+    <string name="labelcorlamina">Blade Color</string>
+    <string name="labeletecido">Is it fabric?</string>
+    <string name="labelcortapete">Mat Color:</string>
+    <string name="labelforcatapete">Mat Force:</string>
+    <string name="labelcorcaneta">Pen Color:</string>
+    <string name="labeltipocorte">Cut Type:</string>
+    <string name="labelsobre">About</string>
+    <string name="novo_processo">New Process</string>
+    <string name="alterar_processo">Edit Process</string>
+    <string name="menu_item_tema_escuro">Dark Theme</string>
+    <string name="menu_item_tema_claro">Light Theme</string>
+    <string name="procedimento_selecionado">" The procedure for the paper "</string>
+    <string name="com">with</string>
+    <string name="gramas_marca">"grams, from the brand "</string>
+    <string name="foi_clicado">were touched</string>
+    <string name="confirmar_excluir_processo">Are you sure you want to delete the process?</string>
+    <string name="confirmar">Confirm?</string>
+    <string name="sim">Yes</string>
+    <string name="nao">No</string>
+</resources>

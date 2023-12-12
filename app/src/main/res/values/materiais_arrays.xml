@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="nomematerial">
+        <item>@string/papellinho</item>
+        <item>@string/papelopaline</item>
+        <item>@string/papelverge</item>
+    </string-array>
+
+    <integer-array name="gramatura">
+        <item>75</item>
+        <item>160</item>
+        <item>180</item>
+    </integer-array>
+
+    <string-array name="marca">
+        <item>@string/spiral</item>
+        <item>@string/chamex</item>
+        <item>@string/canson</item>
+    </string-array>
+
+</resources>

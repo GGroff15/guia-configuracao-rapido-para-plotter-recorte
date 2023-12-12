@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="corcaneta">
+        <item>@string/roxo</item>
+        <item>@string/turquesa</item>
+    </string-array>
+
+</resources>

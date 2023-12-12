@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="corlamina">
+        <item>@string/turquesa</item>
+        <item>@string/roxo</item>
+    </string-array>
+
+    <string-array name="tipocorte">
+        <item>@string/cortedelicado</item>
+        <item>@string/cortepesado</item>
+    </string-array>
+
+</resources>
