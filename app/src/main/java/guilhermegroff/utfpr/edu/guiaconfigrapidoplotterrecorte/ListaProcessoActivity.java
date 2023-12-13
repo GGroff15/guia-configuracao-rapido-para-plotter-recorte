@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,6 +23,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,17 +53,39 @@ public class ListaProcessoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_processo);
 
         listViewProcessos = findViewById(R.id.listViewProcessos);
-        listViewProcessos.setOnItemClickListener((adapterView, view, position, id) -> {
-            Processo processo = (Processo)  adapterView.getItemAtPosition(position);
 
-            String text = getText(R.string.procedimento_selecionado) + String.valueOf(processo.getMaterial()) + getText(R.string.com) + String.valueOf(processo.getMaterial()) + getString(R.string.gramas_marca) + String.valueOf(processo.getMaterial()) + getString(R.string.foi_clicado);
-            Toast.makeText(getApplicationContext(), text,
-                    Toast.LENGTH_SHORT).show();
-        });
         registerForContextMenu(listViewProcessos);
 
-        carregarProcessos();
+       //carregarProcessos();
         lerPreferenciaTema();
+
+        DrawerLayout drawerLayout = findViewById(R.id.layoutLista);
+
+        MaterialToolbar materialToolbar = findViewById(R.id.topAppBar);
+        materialToolbar.inflateMenu(R.menu.principal_opcoes);
+        materialToolbar.setNavigationOnClickListener(view -> {
+            drawerLayout.open();
+        });
+
+        materialToolbar.setOnMenuItemClickListener(item -> {
+            item.setChecked(true);
+            if (item.getItemId() == R.id.tema_escuro) {
+                salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_YES);
+                return true;
+            }
+            if (item.getItemId() == R.id.tema_claro) {
+                salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_NO);
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        });
+
+        NavigationView navigationView = findViewById(R.id.navigation_drawer);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            item.setChecked(true);
+            drawerLayout.close();
+            return true;
+        });
     }
 
     private void lerPreferenciaTema() {
@@ -77,6 +103,7 @@ public class ListaProcessoActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(novoTema);
     }
 
+    /*
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item;
@@ -93,12 +120,7 @@ public class ListaProcessoActivity extends AppCompatActivity {
         return false;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.lista_opcoes, menu);
-        getMenuInflater().inflate(R.menu.principal_opcoes, menu);
-        return true;
-    }
+     */
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte"
         minSdk 16
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -35,6 +35,8 @@ dependencies {
     def room_version = "2.4.1"
 
     //implementation 'org.mongodb:mongodb-driver-sync:4.11.1'
+
+    implementation 'com.google.android.material:material:1.10.0'
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"

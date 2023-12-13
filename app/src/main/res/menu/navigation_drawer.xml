@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/insumos_subheader_tittle"
+        android:title="@string/insumos_subheader_titte">
+        <menu>
+            <item
+                android:id="@+id/tapetes_title"
+                android:title="@string/tapetes_item"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/laminas_title"
+                android:checkable="true"
+                android:title="@string/laminas_item" />
+        </menu>
+    </item>
+</menu>

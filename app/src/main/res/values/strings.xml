@@ -62,4 +62,9 @@
     <string name="confirmar">Confirm?</string>
     <string name="sim">Yes</string>
     <string name="nao">No</string>
+    <string name="home">Home</string>
+    <string name="insumos_subheader_titte">Insumos\n</string>
+    <string name="tapetes_item">Tapetes\n</string>
+    <string name="laminas_item">Laminas</string>
+    <string name="processos_title">Processos</string>
 </resources>

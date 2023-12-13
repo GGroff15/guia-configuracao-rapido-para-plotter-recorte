@@ -18,6 +18,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +131,9 @@ public class CadastroActivity extends AppCompatActivity {
                 });
             }
         }
+
+        MaterialToolbar materialToolbar = findViewById(R.id.topAppBar);
+        materialToolbar.setNavigationOnClickListener(view -> cancelar());
     }
 
     private void popularView(Processo processo, Material material, final Lamina lamina, final Caneta caneta) {
@@ -409,6 +414,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         cancelar();
     }
 
