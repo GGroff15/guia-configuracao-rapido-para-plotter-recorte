@@ -112,6 +112,7 @@ public class ProcessoCorteAdapter extends RecyclerView.Adapter<ProcessoCorteAdap
             menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_editar)).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
+                    editar();
                     return false;
                 }
             });
@@ -120,6 +121,9 @@ public class ProcessoCorteAdapter extends RecyclerView.Adapter<ProcessoCorteAdap
                 return true;
             });
         });
+    }
+
+    private void editar() {
     }
 
     private void excluir(int position) {

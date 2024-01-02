@@ -33,7 +33,7 @@
     <string name="nomecurso">Specialization in Java Development</string>
     <string name="labelemail">Email:</string>
     <string name="emailautor">guilherme.benedeti@utfpr.edu.br</string>
-    <string name="labelmaterial">Material</string>
+    <string name="labelMaterial">Material</string>
     <string name="labelgramatura">Weight:</string>
     <string name="labelmarca">Brand</string>
     <string name="labelprocesso">Process</string>
@@ -69,4 +69,6 @@
     <string name="processos_title">Processos</string>
     <string name="corte_tab_tittle">Corte</string>
     <string name="desenho_tab_tittle">Desenho</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
 </resources>

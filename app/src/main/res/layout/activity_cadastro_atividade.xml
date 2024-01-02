@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="16dp"
-                        android:text="@string/labelmaterial"
+                        android:text="@string/labelMaterial"
                         android:textAlignment="center"
                         android:textSize="25dp" />
 
@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintTop_toBottomOf="@+id/labelTituloMaterial"
-                        android:hint="@string/labelmaterial"
+                        android:hint="@string/labelMaterial"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText

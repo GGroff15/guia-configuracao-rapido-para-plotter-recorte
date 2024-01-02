@@ -28,7 +28,7 @@
     <string name="nomecurso">Especialização em Desenvolvimento Java</string>
     <string name="labelemail">Email:</string>
     <string name="emailautor">guilherme.benedeti@utfpr.edu.br</string>
-    <string name="labelmaterial">Material</string>
+    <string name="labelMaterial">Material</string>
     <string name="labelgramatura">Gramatura:</string>
     <string name="labelmarca">Marca</string>
     <string name="labelprocesso">Processo</string>

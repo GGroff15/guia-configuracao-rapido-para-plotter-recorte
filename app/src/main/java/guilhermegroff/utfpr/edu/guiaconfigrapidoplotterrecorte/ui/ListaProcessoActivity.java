@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
@@ -15,22 +16,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.List;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ModalBottomSheet;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ProcessoFragment;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.tab.ProcessoPageAdapter;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessoService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.tab.TabSelectedListenerImpl;
 
 public class ListaProcessoActivity extends AppCompatActivity {
@@ -41,6 +39,8 @@ public class ListaProcessoActivity extends AppCompatActivity {
     private int posicaoSelecionada = -1;
     private int opcaoTema = AppCompatDelegate.MODE_NIGHT_NO;
     private TabLayout tabLayout;
+    private ModalBottomSheet modalBottomSheet;
+    private ProcessoPageAdapter processoPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +86,15 @@ public class ListaProcessoActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.addOnTabSelectedListener(new TabSelectedListenerImpl(this.viewPager));
 
-        viewPager.setAdapter(new ProcessoPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        processoPageAdapter = new ProcessoPageAdapter(supportFragmentManager, tabLayout.getTabCount());
+        viewPager.setAdapter(processoPageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        getModalBottomSheet();
     }
+
+
 
     private void lerPreferenciaTema() {
         SharedPreferences sharedPreferences = getSharedPreferences(ARQUIVO, Context.MODE_PRIVATE);
@@ -104,6 +109,20 @@ public class ListaProcessoActivity extends AppCompatActivity {
         editor.commit();
         opcaoTema = novoTema;
         AppCompatDelegate.setDefaultNightMode(novoTema);
+    }
+
+    private void getModalBottomSheet() {
+        if (modalBottomSheet == null) {
+            modalBottomSheet = new ModalBottomSheet();
+        }
+    }
+
+    public void filtrarElementos(String nome, String gramatura) {
+        int currentItem = viewPager.getCurrentItem();
+        ProcessoFragment fragment = processoPageAdapter.getRegisteredFragments(currentItem);
+        if (fragment != null) {
+            fragment.filtrarElementos(gramatura, nome);
+        }
     }
 
     /*
@@ -213,6 +232,15 @@ public class ListaProcessoActivity extends AppCompatActivity {
 
     public void abrirSobre(MenuItem item) {
         AutoriaAppActivity.sobre(this);
+    }
+
+    public void abrirFiltro(MenuItem item) {
+        item.setOnMenuItemClickListener(this::abrirModalFiltro);
+    }
+
+    private boolean abrirModalFiltro(MenuItem item) {
+        modalBottomSheet.show(getSupportFragmentManager(), "Dialog");
+        return true;
     }
 
     @Override

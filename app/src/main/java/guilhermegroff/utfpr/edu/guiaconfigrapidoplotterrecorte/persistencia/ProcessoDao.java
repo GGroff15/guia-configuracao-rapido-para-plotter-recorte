@@ -32,4 +32,6 @@ public interface ProcessoDao {
     @Query("SELECT * FROM processo WHERE tipo = :tipo")
     List<Processo> findAllByTipo(String tipo);
 
+    @Query("SELECT * FROM processo WHERE tipo = :tipo AND material IN (:listaIdsMaterial)")
+    List<Processo> findAllByTipoAndMaterial(String tipo, List<Integer> listaIdsMaterial);
 }

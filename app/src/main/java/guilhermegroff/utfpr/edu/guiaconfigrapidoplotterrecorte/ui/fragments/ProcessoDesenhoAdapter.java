@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
 
     private final Context context;
     private final List<Processo> processos;
+    private final FragmentActivity activity;
+    private int selectedPosition;
 
     public static class ProcessoHolder extends RecyclerView.ViewHolder {
         public TextView textViewMaterialNome;
@@ -47,9 +50,10 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
             this.textViewIsTecido = itemView.findViewById(R.id.isTecido);
         }
     }
-    public ProcessoDesenhoAdapter(Context context, List<Processo> processos) {
+    public ProcessoDesenhoAdapter(Context context, List<Processo> processos, FragmentActivity activity) {
         this.context = context;
         this.processos = processos;
+        this.activity = activity;
     }
 
     @NonNull
@@ -88,6 +92,11 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
             holder.textViewIsTecido.setText(processo.getTecido());
         });
 
+        holder.itemView.setOnLongClickListener(v -> {
+            selectedPosition = holder.getBindingAdapterPosition();
+            return false;
+        });
+
         holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_editar));
             menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_excluir));
@@ -107,5 +116,9 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public int getSelectedPosition() {
+        return selectedPosition;
     }
 }

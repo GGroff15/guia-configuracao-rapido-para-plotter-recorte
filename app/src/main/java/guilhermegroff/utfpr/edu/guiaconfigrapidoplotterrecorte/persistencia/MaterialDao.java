@@ -26,7 +26,15 @@ public interface MaterialDao {
     @Query("SELECT * FROM material WHERE id = :id")
     Material findById(int id);
 
+    @Query("SELECT * FROM material WHERE nome LIKE :nome")
+    List<Material> findByNome(String nome);
+
     @Query("SELECT * FROM material ORDER BY nome ASC")
     List<Material> findAll();
 
+    @Query("SELECT * FROM material WHERE gramatura = :s")
+    List<Material> findByGramatura(Integer s);
+
+    @Query("SELECT * FROM material WHERE nome = :nome AND gramatura = :gramatura")
+    List<Material> findByNomeGramatura(String nome, Integer gramatura);
 }

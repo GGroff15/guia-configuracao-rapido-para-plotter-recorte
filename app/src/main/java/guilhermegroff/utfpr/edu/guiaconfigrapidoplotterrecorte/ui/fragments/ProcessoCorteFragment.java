@@ -7,8 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -22,6 +20,7 @@ import java.util.List;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.ProcessoEnum;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessoService;
 
@@ -35,31 +34,23 @@ public class ProcessoCorteFragment extends ProcessoFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.operacao = ProcessoEnum.CORTE;
         this.service = new ProcessoService(this.getContext());
         return inflater.inflate(R.layout.fragment_processo_corte_list, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        this.recyclerView = view.findViewById(R.id.list);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(getMaterialDividerItemDecoration(layoutManager));
-        carregarProcessos();
-        registerForContextMenu(recyclerView);
-    }
-
-    protected void carregarProcessos() {
+    protected void carregarProcessos(String nome, String gramatura) {
         AsyncTask.execute(() -> {
-           List<Processo> processos = this.service.listarPorTipo("Corte");
-           getActivity().runOnUiThread(() -> {
-               adapter = new ProcessoCorteAdapter(getContext(), processos, getActivity());
-               recyclerView.setAdapter(adapter);
-           });
+            List<Processo> processos = getProcessos(nome, gramatura);
+            getActivity().runOnUiThread(() -> {
+                adapter = new ProcessoCorteAdapter(getContext(), processos, getActivity());
+                recyclerView.setAdapter(adapter);
+            });
         });
     }
 
+    /*
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -67,25 +58,7 @@ public class ProcessoCorteFragment extends ProcessoFragment {
         menuInflater.inflate(R.menu.lista_menu_contexto, menu);
     }
 
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int selectedPosition = adapter.getSelectedPosition();
-
-        if (item.getItemId() == R.id.contextMenuItemEditar) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            //editar(info.position);
-            //posicaoSelecionada = info.position;
-            return true;
-        }
-
-        if (item.getItemId() == R.id.contextMenuItemExcluir) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            excluir(info.position);
-            return true;
-        }
-
-        return super.onContextItemSelected(item);
-    }
+     */
 
     private void excluir(int position) {
         // Processo processo = processos.get(position);
@@ -120,5 +93,10 @@ public class ProcessoCorteFragment extends ProcessoFragment {
         builder.setNegativeButton(R.string.nao, listener);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void filtrarElementos(String nome, String gramatura) {
+        carregarProcessos(nome, gramatura);
     }
 }

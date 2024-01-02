@@ -19,7 +19,7 @@
             android:id="@+id/labelNomeMaterial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/labelmaterial" />
+            android:text="@string/labelMaterial" />
 
         <TextView
             android:id="@+id/textViewMaterialNome"
