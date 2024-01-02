@@ -17,7 +17,7 @@
     <string name="cortepesado">Corte pesado</string>
     <string name="cortedelicado">Corte delicado</string>
     <string name="menu_item_adicionar">Adicionar</string>
-    <string name="contrext_menu_item_editar">Editar</string>
+    <string name="context_menu_item_editar">Editar</string>
     <string name="context_menu_item_excluir">Excluir</string>
     <string name="menu_item_salvar">Salvar</string>
     <string name="menu_item_limpar">Limpar</string>

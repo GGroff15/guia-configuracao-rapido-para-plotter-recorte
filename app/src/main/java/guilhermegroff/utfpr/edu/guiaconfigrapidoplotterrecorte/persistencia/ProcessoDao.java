@@ -29,4 +29,7 @@ public interface ProcessoDao {
     @Query("SELECT * FROM processo ORDER BY tipo ASC")
     List<Processo> findAll();
 
+    @Query("SELECT * FROM processo WHERE tipo = :tipo")
+    List<Processo> findAllByTipo(String tipo);
+
 }

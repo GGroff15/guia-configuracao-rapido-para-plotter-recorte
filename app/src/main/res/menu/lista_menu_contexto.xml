@@ -5,7 +5,7 @@
     <item
         android:id="@+id/contextMenuItemEditar"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="@string/contrext_menu_item_editar"
+        android:title="@string/context_menu_item_editar"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/contextMenuItemExcluir"

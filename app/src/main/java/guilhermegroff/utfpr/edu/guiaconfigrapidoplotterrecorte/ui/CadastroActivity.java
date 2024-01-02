@@ -1,4 +1,4 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -23,12 +23,16 @@ import com.google.android.material.appbar.MaterialToolbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Caneta;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Lamina;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Material;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Tapete;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.LaminaService;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessoService;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.TapeteService;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -43,7 +47,6 @@ public class CadastroActivity extends AppCompatActivity {
     private int modo;
     private EditText inputNomeMaterial;
     private EditText inputGramaturaMaterial;
-    private EditText inputMarcaMaterial;
     private EditText inputPressao;
     private Spinner tipoTapete;
     private RadioGroup radioGroupOperacao;
@@ -54,6 +57,10 @@ public class CadastroActivity extends AppCompatActivity {
     private List<Tapete> listaTapetes;
     private List<Lamina> listaLaminas;
     private Processo processo;
+
+    private LaminaService laminaService;
+    private TapeteService tapeteService;
+    private ProcessoService processoService;
 
     public static void novoProcesso(AppCompatActivity appCompatActivity) {
         Intent intent = new Intent(appCompatActivity, CadastroActivity.class);
@@ -70,6 +77,10 @@ public class CadastroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        laminaService = new LaminaService(CadastroActivity.this);
+        tapeteService = new TapeteService(CadastroActivity.this);
+        processoService = new ProcessoService(CadastroActivity.this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_atividade);
 
@@ -80,12 +91,11 @@ public class CadastroActivity extends AppCompatActivity {
 
         inputNomeMaterial = findViewById(R.id.inputNomeMaterial);
         inputGramaturaMaterial = findViewById(R.id.inputGramatura);
-        inputMarcaMaterial = findViewById(R.id.inputMarca);
 
         radioGroupOperacao = findViewById(R.id.radioGroup);
         radioGroupOperacao.setOnCheckedChangeListener(getOnCheckedChangeListener());
 
-        carregarTipoTapetes();
+        carregarTapetes();
 
         inputPressao = findViewById(R.id.inputPressao);
 
@@ -144,9 +154,6 @@ public class CadastroActivity extends AppCompatActivity {
             int gramaturaMaterial = material.getGramatura();
             this.inputGramaturaMaterial.setText(String.valueOf(gramaturaMaterial));
 
-            String marcaMaterial = material.getMarca();
-            this.inputMarcaMaterial.setText(marcaMaterial);
-
             int pressaoFerramenta = processo.getPressao();
             this.inputPressao.setText(String.valueOf(pressaoFerramenta));
 
@@ -189,8 +196,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     private void carregarLaminas() {
         AsyncTask.execute(() -> {
-            PlotterDatabase database = PlotterDatabase.getDatabase(CadastroActivity.this);
-            listaLaminas = database.laminaDao().findAll();
+            listaLaminas = this.laminaService.listar();
             CadastroActivity.this.runOnUiThread(() -> {
                 ArrayAdapter<Lamina> spinnerAdapter = new ArrayAdapter<>(CadastroActivity.this, android.R.layout.simple_spinner_item, listaLaminas);
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -200,10 +206,9 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
-    private void carregarTipoTapetes() {
+    private void carregarTapetes() {
         AsyncTask.execute(() -> {
-            PlotterDatabase database = PlotterDatabase.getDatabase(CadastroActivity.this);
-            listaTapetes = database.tapeteDao().findAll();
+            listaTapetes = tapeteService.listar();
             CadastroActivity.this.runOnUiThread(() -> {
                 ArrayAdapter<Tapete> spinnerAdapter = new ArrayAdapter<>(CadastroActivity.this, android.R.layout.simple_spinner_item, listaTapetes);
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -289,11 +294,10 @@ public class CadastroActivity extends AppCompatActivity {
                     processo.setCaneta(idCaneta);
                 }
 
-                PlotterDatabase database = PlotterDatabase.getDatabase(CadastroActivity.this);
                 if (modo == NOVO) {
-                    database.processoDao().insert(processo);
+                    processoService.salvar(processo);
                 } else {
-                    database.processoDao().update(processo);
+                    processoService.atualizar(processo);
                 }
 
             });
@@ -320,8 +324,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         String gramaturaMaterial = inputGramaturaMaterial.getText().toString();
 
-        String marcaMaterial = inputMarcaMaterial.getText().toString();
-        Material material = new Material(nomeMaterial, Integer.valueOf(gramaturaMaterial), marcaMaterial);
+        Material material = new Material(nomeMaterial, Integer.valueOf(gramaturaMaterial), "");
 
         PlotterDatabase database = PlotterDatabase.getDatabase(CadastroActivity.this);
         return (int) database.materialDao().insert(material);

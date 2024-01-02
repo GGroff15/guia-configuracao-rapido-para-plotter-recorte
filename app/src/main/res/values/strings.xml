@@ -22,7 +22,7 @@
     <string name="cortepesado">Heavy Cutting\n</string>
     <string name="cortedelicado">Delicate Cutting</string>
     <string name="menu_item_adicionar">Add</string>
-    <string name="contrext_menu_item_editar">Edit</string>
+    <string name="context_menu_item_editar">Edit</string>
     <string name="context_menu_item_excluir">Delete</string>
     <string name="menu_item_salvar">Save</string>
     <string name="menu_item_limpar">Clear</string>
@@ -67,4 +67,6 @@
     <string name="tapetes_item">Tapetes\n</string>
     <string name="laminas_item">Laminas</string>
     <string name="processos_title">Processos</string>
+    <string name="corte_tab_tittle">Corte</string>
+    <string name="desenho_tab_tittle">Desenho</string>
 </resources>

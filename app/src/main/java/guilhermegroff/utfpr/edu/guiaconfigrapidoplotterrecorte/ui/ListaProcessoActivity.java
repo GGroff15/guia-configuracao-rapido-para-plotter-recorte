@@ -1,62 +1,55 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Caneta;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Lamina;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Material;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Tapete;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.tab.ProcessoPageAdapter;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessoService;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.tab.TabSelectedListenerImpl;
 
 public class ListaProcessoActivity extends AppCompatActivity {
 
     private static final String ARQUIVO = "utfpr.edu.guiaconfiguracaorapidoplotterrecorte.sharedpreferences.PREFERENCIAS_TEMAS";
     private static final String TEMA = "TEMA";
-    private ListView listViewProcessos;
-    private List<Processo> processos;
-    private ProcessoAdapter listaAdapter;
+    private ViewPager viewPager;
     private int posicaoSelecionada = -1;
     private int opcaoTema = AppCompatDelegate.MODE_NIGHT_NO;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_processo);
 
-        listViewProcessos = findViewById(R.id.listViewProcessos);
+        viewPager = findViewById(R.id.pager);
 
-        registerForContextMenu(listViewProcessos);
-
-       //carregarProcessos();
         lerPreferenciaTema();
 
         DrawerLayout drawerLayout = findViewById(R.id.layoutLista);
@@ -86,6 +79,16 @@ public class ListaProcessoActivity extends AppCompatActivity {
             drawerLayout.close();
             return true;
         });
+
+        tabLayout = findViewById(R.id.tab);
+        tabLayout.addTab(tabLayout.newTab().setText("Corte"));
+        tabLayout.addTab(tabLayout.newTab().setText("Desenho"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.addOnTabSelectedListener(new TabSelectedListenerImpl(this.viewPager));
+
+        viewPager.setAdapter(new ProcessoPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
     }
 
     private void lerPreferenciaTema() {
@@ -136,11 +139,14 @@ public class ListaProcessoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.lista_menu_contexto, menu);
     }
+
+     */
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
@@ -162,12 +168,12 @@ public class ListaProcessoActivity extends AppCompatActivity {
     }
 
     private void editar(int position) {
-        Processo processo = processos.get(position);
-        CadastroActivity.editarProcesso(this, processo);
+        //Processo processo = processos.get(position);
+        //CadastroActivity.editarProcesso(this, processo);
     }
 
     private void excluir(int position) {
-        Processo processo = processos.get(position);
+       // Processo processo = processos.get(position);
         String mensagem = getString(R.string.confirmar_excluir_processo);
 
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
@@ -177,11 +183,11 @@ public class ListaProcessoActivity extends AppCompatActivity {
                     case DialogInterface.BUTTON_POSITIVE:
                         AsyncTask.execute(() -> {
                             PlotterDatabase database = PlotterDatabase.getDatabase(ListaProcessoActivity.this);
-                            database.processoDao().delete(processo);
+                            //database.processoDao().delete(processo);
 
                             ListaProcessoActivity.this.runOnUiThread(() -> {
-                                processos.remove(position);
-                                listaAdapter.notifyDataSetChanged();
+                                //processos.remove(position);
+                                //listaAdapter.notifyDataSetChanged();
                             });
                         });
                         break;
@@ -214,18 +220,8 @@ public class ListaProcessoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK &&
                 (requestCode == CadastroActivity.NOVO || requestCode == CadastroActivity.ALTERAR)) {
-            carregarProcessos();
+            viewPager.setCurrentItem(0);
         }
     }
 
-    private void carregarProcessos() {
-        AsyncTask.execute(() -> {
-            PlotterDatabase database = PlotterDatabase.getDatabase(ListaProcessoActivity.this);
-            processos = database.processoDao().findAll();
-            ListaProcessoActivity.this.runOnUiThread(() -> {
-                listaAdapter = new ProcessoAdapter(ListaProcessoActivity.this, processos);
-                listViewProcessos.setAdapter(listaAdapter);
-            });
-        });
-    }
 }
