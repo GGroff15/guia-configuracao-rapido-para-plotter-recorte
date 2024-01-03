@@ -93,23 +93,6 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/campoMarcaMaterial"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:hint="@string/labelmarca"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/inputMarca"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="text"/>
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
                 </LinearLayout>
 
                 <com.google.android.material.divider.MaterialDivider
