@@ -10,12 +10,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 
@@ -33,45 +32,26 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.tab.TabSelecte
 
 public class ListaProcessoActivity extends AppCompatActivity {
 
-    private static final String ARQUIVO = "utfpr.edu.guiaconfiguracaorapidoplotterrecorte.sharedpreferences.PREFERENCIAS_TEMAS";
-    private static final String TEMA = "TEMA";
     private ViewPager viewPager;
-    private int posicaoSelecionada = -1;
-    private int opcaoTema = AppCompatDelegate.MODE_NIGHT_NO;
-    private TabLayout tabLayout;
     private ModalBottomSheet modalBottomSheet;
     private ProcessoPageAdapter processoPageAdapter;
+    private TemaUtil temaUtil;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_processo);
 
+        this.temaUtil = new TemaUtil(this);
+        this.temaUtil.lerPreferenciaTema();
+
         viewPager = findViewById(R.id.pager);
 
-        lerPreferenciaTema();
-
-        DrawerLayout drawerLayout = findViewById(R.id.layoutLista);
+        drawerLayout = findViewById(R.id.layoutLista);
 
         MaterialToolbar materialToolbar = findViewById(R.id.topAppBar);
-        materialToolbar.inflateMenu(R.menu.principal_opcoes);
-        materialToolbar.setNavigationOnClickListener(view -> {
-            drawerLayout.open();
-        });
-
-        materialToolbar.setOnMenuItemClickListener(item -> {
-            item.setChecked(true);
-            if (item.getItemId() == R.id.tema_escuro) {
-                salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_YES);
-                return true;
-            }
-            if (item.getItemId() == R.id.tema_claro) {
-                salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_NO);
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        });
+        setSupportActionBar(materialToolbar);
 
         NavigationView navigationView = findViewById(R.id.navigation_drawer);
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -80,7 +60,7 @@ public class ListaProcessoActivity extends AppCompatActivity {
             return true;
         });
 
-        tabLayout = findViewById(R.id.tab);
+        TabLayout tabLayout = findViewById(R.id.tab);
         tabLayout.addTab(tabLayout.newTab().setText("Corte"));
         tabLayout.addTab(tabLayout.newTab().setText("Desenho"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -92,23 +72,6 @@ public class ListaProcessoActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         getModalBottomSheet();
-    }
-
-
-
-    private void lerPreferenciaTema() {
-        SharedPreferences sharedPreferences = getSharedPreferences(ARQUIVO, Context.MODE_PRIVATE);
-        opcaoTema = sharedPreferences.getInt(TEMA, opcaoTema);
-        AppCompatDelegate.setDefaultNightMode(opcaoTema);
-    }
-
-    private void salvarPreferenciaTema(int novoTema) {
-        SharedPreferences sharedPreferences = getSharedPreferences(ARQUIVO, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(TEMA, novoTema);
-        editor.commit();
-        opcaoTema = novoTema;
-        AppCompatDelegate.setDefaultNightMode(novoTema);
     }
 
     private void getModalBottomSheet() {
@@ -125,16 +88,22 @@ public class ListaProcessoActivity extends AppCompatActivity {
         }
     }
 
-    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.principal_opcoes, menu);
+        getMenuInflater().inflate(R.menu.lista_opcoes, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item;
-        if (opcaoTema == AppCompatDelegate.MODE_NIGHT_YES) {
+        if (temaUtil.getOpcaoTema() == AppCompatDelegate.MODE_NIGHT_YES) {
             item = menu.findItem(R.id.tema_escuro);
             item.setChecked(true);
             return true;
         }
-        if (opcaoTema == AppCompatDelegate.MODE_NIGHT_NO) {
+        if (temaUtil.getOpcaoTema() == AppCompatDelegate.MODE_NIGHT_NO) {
             item = menu.findItem(R.id.tema_claro);
             item.setChecked(true);
             return true;
@@ -142,30 +111,25 @@ public class ListaProcessoActivity extends AppCompatActivity {
         return false;
     }
 
-     */
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
         if (item.getItemId() == R.id.tema_escuro) {
-            salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_YES);
+            this.temaUtil.salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_YES);
             return true;
         }
         if (item.getItemId() == R.id.tema_claro) {
-            salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_NO);
+            this.temaUtil.salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_NO);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /*
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.lista_menu_contexto, menu);
+    public boolean onSupportNavigateUp() {
+        drawerLayout.open();
+        return super.onSupportNavigateUp();
     }
-
-     */
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
@@ -173,7 +137,6 @@ public class ListaProcessoActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.contextMenuItemEditar) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             editar(info.position);
-            posicaoSelecionada = info.position;
             return true;
         }
 
@@ -235,12 +198,7 @@ public class ListaProcessoActivity extends AppCompatActivity {
     }
 
     public void abrirFiltro(MenuItem item) {
-        item.setOnMenuItemClickListener(this::abrirModalFiltro);
-    }
-
-    private boolean abrirModalFiltro(MenuItem item) {
-        modalBottomSheet.show(getSupportFragmentManager(), "Dialog");
-        return true;
+        modalBottomSheet.show(getSupportFragmentManager(), "BottomSheetProcessFilter");
     }
 
     @Override
