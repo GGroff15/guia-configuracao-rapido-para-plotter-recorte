@@ -1,4 +1,4 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.adapter;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -15,7 +15,6 @@ import java.util.List;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Caneta;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Lamina;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Material;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Tapete;
@@ -69,27 +68,25 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
 
         AsyncTask.execute(() -> {
             PlotterDatabase database = PlotterDatabase.getDatabase(this.context);
-
+            Caneta caneta = database.canetaDao().findById(processo.getCaneta());
             Material material = database.materialDao().findById(processo.getMaterial());
-            holder.textViewMaterialNome.setText(material.getNome());
-            holder.textViewMaterialGramatura.setText(String.valueOf(material.getGramatura()));
-
             Tapete tapete = database.tapeteDao().findById(processo.getTapete());
-            holder.textViewTapeteCor.setText(tapete.getCor());
-            holder.textViewTapeteForca.setText(tapete.getForcaAderencia());
 
-            holder.textViewPressao.setText(String.valueOf(processo.getPressao()));
+            activity.runOnUiThread(() -> {
+                holder.textViewMaterialNome.setText(material.getNome());
+                holder.textViewMaterialGramatura.setText(String.valueOf(material.getGramatura()));
 
-            holder.textViewIsCorte.setText(processo.getTipo());
+                holder.textViewTapeteCor.setText(tapete.getCor());
+                holder.textViewTapeteForca.setText(tapete.getForcaAderencia());
 
-            if (processo.getCaneta() != null && processo.getCaneta() != 0) {
-                Caneta caneta = database.canetaDao().findById(processo.getCaneta());
+                holder.textViewPressao.setText(String.valueOf(processo.getPressao()));
+
+                holder.textViewIsCorte.setText(processo.getTipo());
+
                 holder.textViewCanetaCor.setText(caneta.getEspessura());
-            } else {
-                holder.textViewCanetaCor.setText("");
-            }
 
-            holder.textViewIsTecido.setText(processo.getTecido());
+                holder.textViewIsTecido.setText(processo.getTecido());
+            });
         });
 
         holder.itemView.setOnLongClickListener(v -> {

@@ -23,6 +23,7 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Process
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.ProcessoEnum;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessoService;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.adapter.ProcessoDesenhoAdapter;
 
 public class ProcessoDesenhoFragment extends ProcessoFragment {
 
