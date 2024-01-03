@@ -1,11 +1,8 @@
 package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -23,12 +20,7 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Process
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Tapete;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
 
-public class ProcessoCorteAdapter extends RecyclerView.Adapter<ProcessoCorteAdapter.ProcessoHolder> {
-
-    private final Context context;
-    private final List<Processo> processos;
-    private FragmentActivity activity;
-    private int selectedPosition;
+public class ProcessoCorteAdapter extends ProcessoAdapter<ProcessoCorteAdapter.ProcessoHolder> {
 
     public static class ProcessoHolder extends RecyclerView.ViewHolder {
         public TextView textViewMaterialNome;
@@ -58,9 +50,7 @@ public class ProcessoCorteAdapter extends RecyclerView.Adapter<ProcessoCorteAdap
 
     }
     public ProcessoCorteAdapter(Context context, List<Processo> processos, FragmentActivity activity) {
-        this.context = context;
-        this.processos = processos;
-        this.activity = activity;
+        super(context, activity, processos);
     }
 
     @NonNull
@@ -76,31 +66,23 @@ public class ProcessoCorteAdapter extends RecyclerView.Adapter<ProcessoCorteAdap
 
         AsyncTask.execute(() -> {
             PlotterDatabase database = PlotterDatabase.getDatabase(this.context);
-
-            Material material = database.materialDao().findById(processo.getMaterial());
-            holder.textViewMaterialNome.setText(material.getNome());
-            holder.textViewMaterialGramatura.setText(String.valueOf(material.getGramatura()));
-
             Tapete tapete = database.tapeteDao().findById(processo.getTapete());
-            holder.textViewTapeteCor.setText(tapete.getCor());
-            holder.textViewTapeteForca.setText(tapete.getForcaAderencia());
+            Material material = database.materialDao().findById(processo.getMaterial());
+            Lamina lamina = database.laminaDao().findById(processo.getLamina());
 
-            holder.textViewPressao.setText(String.valueOf(processo.getPressao()));
-
-            holder.textViewIsCorte.setText(processo.getTipo());
-
-            if (processo.getLamina() != null && processo.getLamina() != 0) {
-                Lamina lamina = database.laminaDao().findById(processo.getLamina());
+            activity.runOnUiThread(() -> {
+                holder.textViewMaterialNome.setText(material.getNome());
+                holder.textViewMaterialGramatura.setText(String.valueOf(material.getGramatura()));
+                holder.textViewTapeteCor.setText(tapete.getCor());
+                holder.textViewTapeteForca.setText(tapete.getForcaAderencia());
+                holder.textViewPressao.setText(String.valueOf(processo.getPressao()));
+                holder.textViewIsCorte.setText(processo.getTipo());
                 holder.textViewLaminaCor.setText(lamina.getCor());
                 holder.textViewLaminaMaterial.setText(lamina.getTipoMaterial());
                 holder.textViewProfundidadeLamina.setText(String.valueOf(processo.getProfundidadeLamina()));
-            } else {
-                holder.textViewLaminaCor.setText("");
-                holder.textViewLaminaMaterial.setText("");
-                holder.textViewProfundidadeLamina.setText("");
-            }
+                holder.textViewIsTecido.setText(processo.getTecido());
+            });
 
-            holder.textViewIsTecido.setText(processo.getTecido());
         });
 
         holder.itemView.setOnLongClickListener(v -> {
@@ -109,62 +91,15 @@ public class ProcessoCorteAdapter extends RecyclerView.Adapter<ProcessoCorteAdap
         });
 
         holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
-            menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_editar)).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
-                    editar();
-                    return false;
-                }
+            menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_editar)).setOnMenuItemClickListener(menuItem -> {
+                editar(selectedPosition);
+                return true;
             });
             menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_excluir)).setOnMenuItemClickListener(menuItem -> {
                 excluir(selectedPosition);
                 return true;
             });
         });
-    }
-
-    private void editar() {
-    }
-
-    private void excluir(int position) {
-        // Processo processo = processos.get(position);
-        String mensagem = this.context.getString(R.string.confirmar_excluir_processo);
-
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        AsyncTask.execute(() -> {
-                            PlotterDatabase database = PlotterDatabase.getDatabase(context);
-                            //database.processoDao().delete(processo);
-
-                            activity.runOnUiThread(() -> {
-                                //processos.remove(position);
-                                //listaAdapter.notifyDataSetChanged();
-                            });
-                        });
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.confirmar);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setMessage(mensagem);
-        builder.setPositiveButton(R.string.sim, listener);
-        builder.setNegativeButton(R.string.nao, listener);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    @Override
-    public void onViewRecycled(@NonNull ProcessoHolder holder) {
-        holder.itemView.setOnLongClickListener(null);
-        super.onViewRecycled(holder);
     }
 
     @Override
@@ -182,7 +117,4 @@ public class ProcessoCorteAdapter extends RecyclerView.Adapter<ProcessoCorteAdap
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public int getSelectedPosition() {
-        return selectedPosition;
-    }
 }

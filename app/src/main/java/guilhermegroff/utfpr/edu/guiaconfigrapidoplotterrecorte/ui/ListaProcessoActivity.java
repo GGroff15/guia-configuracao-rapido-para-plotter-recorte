@@ -16,7 +16,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -137,64 +136,6 @@ public class ListaProcessoActivity extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == R.id.contextMenuItemEditar) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            editar(info.position);
-            return true;
-        }
-
-        if (item.getItemId() == R.id.contextMenuItemExcluir) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            excluir(info.position);
-            return true;
-        }
-
-        return super.onContextItemSelected(item);
-    }
-
-    private void editar(int position) {
-        //Processo processo = processos.get(position);
-        //CadastroActivity.editarProcesso(this, processo);
-    }
-
-    private void excluir(int position) {
-       // Processo processo = processos.get(position);
-        String mensagem = getString(R.string.confirmar_excluir_processo);
-
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        AsyncTask.execute(() -> {
-                            PlotterDatabase database = PlotterDatabase.getDatabase(ListaProcessoActivity.this);
-                            //database.processoDao().delete(processo);
-
-                            ListaProcessoActivity.this.runOnUiThread(() -> {
-                                //processos.remove(position);
-                                //listaAdapter.notifyDataSetChanged();
-                            });
-                        });
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ListaProcessoActivity.this);
-        builder.setTitle(R.string.confirmar);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setMessage(mensagem);
-        builder.setPositiveButton(R.string.sim, listener);
-        builder.setNegativeButton(R.string.nao, listener);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
     public void adicionarProcesso(MenuItem item) {
         CadastroActivity.novoProcesso(this);
     }
@@ -213,6 +154,9 @@ public class ListaProcessoActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK &&
                 (requestCode == CadastroActivity.NOVO || requestCode == CadastroActivity.ALTERAR)) {
             viewPager.setCurrentItem(0);
+            for (int i = 0; i < processoPageAdapter.getCount(); i++) {
+                processoPageAdapter.getRegisteredFragments(i).carregarProcessos();
+            }
         }
     }
 

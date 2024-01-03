@@ -27,8 +27,6 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.adap
 
 public class ProcessoDesenhoFragment extends ProcessoFragment {
 
-    private ProcessoDesenhoAdapter adapter;
-
     public ProcessoDesenhoFragment() {
     }
 
@@ -49,68 +47,6 @@ public class ProcessoDesenhoFragment extends ProcessoFragment {
                 recyclerView.setAdapter(adapter);
             });
         });
-    }
-
-    @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater menuInflater = getActivity().getMenuInflater();
-        menuInflater.inflate(R.menu.lista_menu_contexto, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int selectedPosition = adapter.getSelectedPosition();
-
-        if (item.getItemId() == R.id.contextMenuItemEditar) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            //editar(info.position);
-            //posicaoSelecionada = info.position;
-            return true;
-        }
-
-        if (item.getItemId() == R.id.contextMenuItemExcluir) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            excluir(info.position);
-            return true;
-        }
-
-        return super.onContextItemSelected(item);
-    }
-
-    private void excluir(int position) {
-        // Processo processo = processos.get(position);
-        String mensagem = getString(R.string.confirmar_excluir_processo);
-
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        AsyncTask.execute(() -> {
-                            PlotterDatabase database = PlotterDatabase.getDatabase(ProcessoDesenhoFragment.this.getContext());
-                            //database.processoDao().delete(processo);
-
-                            getActivity().runOnUiThread(() -> {
-                                //processos.remove(position);
-                                //listaAdapter.notifyDataSetChanged();
-                            });
-                        });
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProcessoDesenhoFragment.this.getContext());
-        builder.setTitle(R.string.confirmar);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setMessage(mensagem);
-        builder.setPositiveButton(R.string.sim, listener);
-        builder.setNegativeButton(R.string.nao, listener);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
     @Override

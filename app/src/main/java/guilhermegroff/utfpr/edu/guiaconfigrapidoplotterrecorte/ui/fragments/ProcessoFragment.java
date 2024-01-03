@@ -20,6 +20,7 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.ProcessoEnum;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessoService;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.adapter.ProcessoAdapter;
 
 public abstract class ProcessoFragment extends Fragment {
 
@@ -28,6 +29,7 @@ public abstract class ProcessoFragment extends Fragment {
     protected ProcessoEnum operacao;
 
     protected ModalBottomSheet modalBottomSheet;
+    protected ProcessoAdapter adapter;
 
     @NonNull
     MaterialDividerItemDecoration getMaterialDividerItemDecoration(LinearLayoutManager layoutManager) {
@@ -58,7 +60,7 @@ public abstract class ProcessoFragment extends Fragment {
         return new ArrayList<>();
     }
 
-    protected void carregarProcessos() {
+    public void carregarProcessos() {
         carregarProcessos("", "");
     }
 
@@ -77,4 +79,5 @@ public abstract class ProcessoFragment extends Fragment {
     protected abstract void carregarProcessos(String nome, String gramatura);
 
     public abstract void filtrarElementos(String gramatura, String nome);
+
 }

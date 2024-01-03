@@ -20,12 +20,7 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Process
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Tapete;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
 
-public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenhoAdapter.ProcessoHolder> {
-
-    private final Context context;
-    private final List<Processo> processos;
-    private final FragmentActivity activity;
-    private int selectedPosition;
+public class ProcessoDesenhoAdapter extends ProcessoAdapter<ProcessoDesenhoAdapter.ProcessoHolder> {
 
     public static class ProcessoHolder extends RecyclerView.ViewHolder {
         public TextView textViewMaterialNome;
@@ -50,9 +45,7 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
         }
     }
     public ProcessoDesenhoAdapter(Context context, List<Processo> processos, FragmentActivity activity) {
-        this.context = context;
-        this.processos = processos;
-        this.activity = activity;
+        super(context, activity, processos);
     }
 
     @NonNull
@@ -75,16 +68,11 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
             activity.runOnUiThread(() -> {
                 holder.textViewMaterialNome.setText(material.getNome());
                 holder.textViewMaterialGramatura.setText(String.valueOf(material.getGramatura()));
-
                 holder.textViewTapeteCor.setText(tapete.getCor());
                 holder.textViewTapeteForca.setText(tapete.getForcaAderencia());
-
                 holder.textViewPressao.setText(String.valueOf(processo.getPressao()));
-
                 holder.textViewIsCorte.setText(processo.getTipo());
-
                 holder.textViewCanetaCor.setText(caneta.getEspessura());
-
                 holder.textViewIsTecido.setText(processo.getTecido());
             });
         });
@@ -95,8 +83,14 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
         });
 
         holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
-            menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_editar));
-            menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_excluir));
+            menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_editar)).setOnMenuItemClickListener(menuItem -> {
+                editar(selectedPosition);
+                return true;
+            });
+            menu.add(0, v.getId(), 0, context.getString(R.string.context_menu_item_excluir)).setOnMenuItemClickListener(menuItem -> {
+                excluir(selectedPosition);
+                return true;
+            });
         });
     }
 
@@ -115,7 +109,4 @@ public class ProcessoDesenhoAdapter extends RecyclerView.Adapter<ProcessoDesenho
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public int getSelectedPosition() {
-        return selectedPosition;
-    }
 }
