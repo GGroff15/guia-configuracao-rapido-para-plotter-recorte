@@ -71,4 +71,6 @@
     <string name="desenho_tab_tittle">Desenho</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
+    <string name="thickness">Thickness</string>
+    <string name="pen">Pen</string>
 </resources>
