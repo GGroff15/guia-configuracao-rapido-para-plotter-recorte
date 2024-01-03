@@ -35,7 +35,6 @@ public class ProcessoPageAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -58,6 +57,5 @@ public class ProcessoPageAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return numeroTabs;
     }
-
 
 }

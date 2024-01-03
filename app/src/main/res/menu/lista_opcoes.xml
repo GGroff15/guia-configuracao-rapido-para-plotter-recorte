@@ -8,14 +8,6 @@
         android:title="@string/filter"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menuItemAdicionar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@android:drawable/ic_menu_add"
-        android:onClick="adicionarProcesso"
-        android:title="@string/menu_item_adicionar"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/menuItemSobre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

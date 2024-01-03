@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -72,6 +73,11 @@ public class ListaProcessoActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         getModalBottomSheet();
+
+        FloatingActionButton fab = findViewById(R.id.floating_action_button);
+        fab.setOnClickListener(v -> {
+            adicionarProcesso(null);
+        });
     }
 
     private void getModalBottomSheet() {
