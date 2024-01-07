@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 
 public class AutoriaAppActivity extends AppCompatActivity {
@@ -22,6 +24,9 @@ public class AutoriaAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autoria_app);
 
+        MaterialToolbar toolbar = findViewById(R.id.topAppBar);
+        setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -30,6 +35,7 @@ public class AutoriaAppActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         cancelar();
     }
 

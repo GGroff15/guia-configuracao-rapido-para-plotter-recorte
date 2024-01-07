@@ -34,6 +34,7 @@ public abstract class PlotterDatabase extends RoomDatabase {
                 if (instance == null) {
                     RoomDatabase.Builder builder = Room.databaseBuilder(context, PlotterDatabase.class, "caneta.db");
 
+                    /*
                     builder.addCallback(new Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -47,6 +48,8 @@ public abstract class PlotterDatabase extends RoomDatabase {
                             });
                         }
                     });
+
+                     */
 
                     instance = (PlotterDatabase) builder.build();
                 }

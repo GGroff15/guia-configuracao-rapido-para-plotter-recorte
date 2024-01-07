@@ -1,4 +1,4 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.adapter;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.process.adapter;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -110,11 +110,6 @@ public class ProcessoCorteAdapter extends ProcessoAdapter<ProcessoCorteAdapter.P
     @Override
     public int getItemCount() {
         return processos.size();
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
 }

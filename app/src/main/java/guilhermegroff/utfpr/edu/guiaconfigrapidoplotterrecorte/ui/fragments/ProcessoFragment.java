@@ -1,6 +1,5 @@
 package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 
-import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.ProcessoEnum;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessoService;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.adapter.ProcessoAdapter;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.process.adapter.ProcessoAdapter;
 
 public abstract class ProcessoFragment extends Fragment {
 
@@ -28,7 +26,7 @@ public abstract class ProcessoFragment extends Fragment {
     protected RecyclerView recyclerView;
     protected ProcessoEnum operacao;
 
-    protected ModalBottomSheet modalBottomSheet;
+    protected ModalBottomSheetProcessFilter modalBottomSheetProcessFilter;
     protected ProcessoAdapter adapter;
 
     @NonNull
@@ -72,7 +70,6 @@ public abstract class ProcessoFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(getMaterialDividerItemDecoration(layoutManager));
         carregarProcessos();
-        registerForContextMenu(recyclerView);
 
     }
 

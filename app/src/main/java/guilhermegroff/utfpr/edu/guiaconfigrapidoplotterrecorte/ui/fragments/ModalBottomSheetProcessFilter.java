@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.ListaProcessoActivity;
 
-public class ModalBottomSheet extends BottomSheetDialogFragment {
+public class ModalBottomSheetProcessFilter extends BottomSheetDialogFragment {
 
     private TextInputEditText inputEditTextNome;
     private TextInputEditText inputEditTextGramatura;
@@ -24,7 +24,7 @@ public class ModalBottomSheet extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.modal_bottom_sheet, container, false);
+        return inflater.inflate(R.layout.modal_bottom_sheet_process_filter, container, false);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class ModalBottomSheet extends BottomSheetDialogFragment {
         String gramatura = inputEditTextNome.getText().toString();
         String nome = inputEditTextGramatura.getText().toString();
 
-        ListaProcessoActivity activity = (ListaProcessoActivity) getActivity();
-        activity.filtrarElementos(nome, gramatura);
+        ProcessListFragment fragment = (ProcessListFragment) getParentFragment();
+        fragment.filtrarElementos(nome, gramatura);
     }
 
 }

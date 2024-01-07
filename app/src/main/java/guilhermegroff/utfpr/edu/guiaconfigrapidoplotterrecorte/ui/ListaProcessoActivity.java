@@ -6,13 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,17 +26,14 @@ import com.google.android.material.tabs.TabLayout;
 
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ModalBottomSheet;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.ProcessoEnum;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ModalBottomSheetProcessFilter;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ProcessoFragment;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.tab.ProcessoPageAdapter;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.tab.TabSelectedListenerImpl;
 
 public class ListaProcessoActivity extends AppCompatActivity {
 
-    private ViewPager viewPager;
-    private ModalBottomSheet modalBottomSheet;
-    private ProcessoPageAdapter processoPageAdapter;
     private TemaUtil temaUtil;
     private DrawerLayout drawerLayout;
 
@@ -46,12 +45,10 @@ public class ListaProcessoActivity extends AppCompatActivity {
         this.temaUtil = new TemaUtil(this);
         this.temaUtil.lerPreferenciaTema();
 
-        viewPager = findViewById(R.id.pager);
-
         drawerLayout = findViewById(R.id.layoutLista);
 
-        MaterialToolbar materialToolbar = findViewById(R.id.topAppBar);
-        setSupportActionBar(materialToolbar);
+        MaterialToolbar toolbar = findViewById(R.id.topAppBar);
+        setSupportActionBar(toolbar);
 
         NavigationView navigationView = findViewById(R.id.navigation_drawer);
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -60,37 +57,6 @@ public class ListaProcessoActivity extends AppCompatActivity {
             return true;
         });
 
-        TabLayout tabLayout = findViewById(R.id.tab);
-        tabLayout.addTab(tabLayout.newTab().setText("Corte"));
-        tabLayout.addTab(tabLayout.newTab().setText("Desenho"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.addOnTabSelectedListener(new TabSelectedListenerImpl(this.viewPager));
-
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        processoPageAdapter = new ProcessoPageAdapter(supportFragmentManager, tabLayout.getTabCount());
-        viewPager.setAdapter(processoPageAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        getModalBottomSheet();
-
-        FloatingActionButton fab = findViewById(R.id.floating_action_button);
-        fab.setOnClickListener(v -> {
-            adicionarProcesso(null);
-        });
-    }
-
-    private void getModalBottomSheet() {
-        if (modalBottomSheet == null) {
-            modalBottomSheet = new ModalBottomSheet();
-        }
-    }
-
-    public void filtrarElementos(String nome, String gramatura) {
-        int currentItem = viewPager.getCurrentItem();
-        ProcessoFragment fragment = processoPageAdapter.getRegisteredFragments(currentItem);
-        if (fragment != null) {
-            fragment.filtrarElementos(gramatura, nome);
-        }
     }
 
     @Override
@@ -136,28 +102,12 @@ public class ListaProcessoActivity extends AppCompatActivity {
         return super.onSupportNavigateUp();
     }
 
-    public void adicionarProcesso(MenuItem item) {
-        CadastroActivity.novoProcesso(this);
-    }
-
     public void abrirSobre(MenuItem item) {
         AutoriaAppActivity.sobre(this);
     }
 
-    public void abrirFiltro(MenuItem item) {
-        modalBottomSheet.show(getSupportFragmentManager(), "BottomSheetProcessFilter");
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK &&
-                (requestCode == CadastroActivity.NOVO || requestCode == CadastroActivity.ALTERAR)) {
-            viewPager.setCurrentItem(0);
-            for (int i = 0; i < processoPageAdapter.getCount(); i++) {
-                processoPageAdapter.getRegisteredFragments(i).carregarProcessos();
-            }
-        }
+    public void abrirListaLaminas(MenuItem item) {
+        ListaLaminaActivity.laminas(this);
     }
 
 }

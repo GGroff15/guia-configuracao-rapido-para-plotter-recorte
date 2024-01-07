@@ -4,13 +4,9 @@
     <item
         android:id="@+id/menuItemFiltrar"
         android:icon="@drawable/baseline_search_24"
-        android:onClick="abrirFiltro"
         android:title="@string/filter"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/menuItemSobre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="abrirSobre"
-        android:title="@string/labelsobre" />
+    <!--
+        android:onClick="abrirFiltro"
+        -->
 </menu>

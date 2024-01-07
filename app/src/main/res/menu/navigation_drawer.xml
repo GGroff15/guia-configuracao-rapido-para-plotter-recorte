@@ -12,7 +12,12 @@
             <item
                 android:id="@+id/laminas_title"
                 android:checkable="true"
-                android:title="@string/laminas_item" />
+                android:title="@string/laminas_item"
+                android:onClick="abrirListaLaminas"/>
         </menu>
     </item>
+    <item
+        android:id="@+id/about"
+        android:title="@string/labelsobre"
+        android:onClick="abrirSobre"/>
 </menu>
