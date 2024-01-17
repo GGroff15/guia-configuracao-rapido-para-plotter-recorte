@@ -2,9 +2,11 @@ package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Lamina;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Blade;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.LaminaDao;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
 
@@ -16,19 +18,23 @@ public class LaminaService {
         this.laminaDao = PlotterDatabase.getDatabase(context).laminaDao();
     }
 
-    public List<Lamina> listar() {
+    public List<Blade> listar() {
         return laminaDao.findAll();
     }
 
-    public void save(Lamina lamina) {
+    public void save(Blade lamina) {
         laminaDao.insert(lamina);
     }
 
-    public void update(Lamina lamina) {
+    public void update(Blade lamina) {
         laminaDao.update(lamina);
     }
 
-    public Lamina buscar(int id) {
+    public Blade buscar(int id) {
         return laminaDao.findById(id);
+    }
+
+    public LiveData<List<Blade>> getItens() {
+        return laminaDao.getItens();
     }
 }

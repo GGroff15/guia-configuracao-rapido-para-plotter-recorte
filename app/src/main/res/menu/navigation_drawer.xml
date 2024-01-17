@@ -6,18 +6,16 @@
         android:title="@string/insumos_subheader_titte">
         <menu>
             <item
-                android:id="@+id/tapetes_title"
-                android:title="@string/tapetes_item"
+                android:id="@+id/matListFragment"
+                android:title="@string/mat_list"
                 android:checkable="true"/>
             <item
-                android:id="@+id/laminas_title"
+                android:id="@+id/bladeListFragment"
                 android:checkable="true"
-                android:title="@string/laminas_item"
-                android:onClick="abrirListaLaminas"/>
+                android:title="@string/blade_list"/>
         </menu>
     </item>
     <item
-        android:id="@+id/about"
-        android:title="@string/labelsobre"
-        android:onClick="abrirSobre"/>
+        android:id="@+id/aboutFragment"
+        android:title="@string/labelsobre"/>
 </menu>

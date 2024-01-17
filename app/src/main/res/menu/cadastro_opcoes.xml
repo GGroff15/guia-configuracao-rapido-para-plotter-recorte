@@ -5,13 +5,11 @@
     <item
         android:id="@+id/menuItemSalvar"
         android:icon="@android:drawable/ic_menu_save"
-        android:onClick="salvar"
-        android:title="@string/menu_item_salvar"
+        android:title="@string/save"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menuItemLimpar"
         android:icon="@android:drawable/ic_menu_delete"
-        android:onClick="limpar"
-        android:title="@string/menu_item_limpar"
+        android:title="@string/clear"
         app:showAsAction="ifRoom" />
 </menu>

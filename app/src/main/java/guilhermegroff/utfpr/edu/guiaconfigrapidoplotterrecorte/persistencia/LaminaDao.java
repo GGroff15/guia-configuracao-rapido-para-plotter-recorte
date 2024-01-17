@@ -1,6 +1,7 @@
 package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,25 +10,26 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Caneta;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Lamina;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Blade;
 
 @Dao
 public interface LaminaDao {
 
     @Insert
-    long insert(Lamina lamina);
+    long insert(Blade lamina);
 
     @Delete
-    void delete(Lamina lamina);
+    void delete(Blade lamina);
 
     @Update
-    void update(Lamina lamina);
+    void update(Blade lamina);
 
-    @Query("SELECT * FROM lamina WHERE id = :id")
-    Lamina findById(int id);
+    @Query("SELECT * FROM Blade WHERE id = :id")
+    Blade findById(int id);
 
-    @Query("SELECT * FROM lamina ORDER BY cor ASC")
-    List<Lamina> findAll();
+    @Query("SELECT * FROM Blade ORDER BY cor ASC")
+    List<Blade> findAll();
 
+    @Query("SELECT * FROM Blade ORDER BY cor ASC")
+    LiveData<List<Blade>> getItens();
 }

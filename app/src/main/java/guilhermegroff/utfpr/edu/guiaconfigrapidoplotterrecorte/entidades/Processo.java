@@ -7,20 +7,16 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "processo",
     foreignKeys = {
-            @ForeignKey(entity = Material.class, parentColumns = "id", childColumns = "material"),
-            @ForeignKey(entity = Tapete.class, parentColumns = "id", childColumns = "tapete"),
-            @ForeignKey(entity = Caneta.class, parentColumns = "id", childColumns = "caneta"),
-            @ForeignKey(entity = Lamina.class, parentColumns = "id", childColumns = "lamina")
+            @ForeignKey(entity = Mat.class, parentColumns = "id", childColumns = "tapete"),
+            @ForeignKey(entity = Blade.class, parentColumns = "id", childColumns = "lamina")
     })
 public class Processo {
     @PrimaryKey(autoGenerate = true)
     private Integer id;
-    @ColumnInfo(index = true)
-    private Integer material;
+    private String material;
+    private int gramatura;
     @ColumnInfo(index = true)
     private Integer tapete;
-    @ColumnInfo(index = true)
-    private Integer caneta;
     private Integer pressao;
     private String tipo;
     @ColumnInfo(index = true)
@@ -40,28 +36,12 @@ public class Processo {
         this.id = id;
     }
 
-    public Integer getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Integer material) {
-        this.material = material;
-    }
-
     public Integer getTapete() {
         return tapete;
     }
 
     public void setTapete(Integer tapete) {
         this.tapete = tapete;
-    }
-
-    public Integer getCaneta() {
-        return caneta;
-    }
-
-    public void setCaneta(Integer caneta) {
-        this.caneta = caneta;
     }
 
     public Integer getPressao() {
@@ -102,5 +82,21 @@ public class Processo {
 
     public void setTecido(String tecido) {
         this.tecido = tecido;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setGramatura(int gramatura) {
+        this.gramatura = gramatura;
+    }
+
+    public int getGramatura() {
+        return gramatura;
     }
 }

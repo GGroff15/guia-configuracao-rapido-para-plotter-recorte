@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/processListFragment">
+    <fragment
+        android:id="@+id/processListFragment"
+        android:name="guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.process.list.ProcessListFragment"
+        android:label="@string/processos_title">
+        <action
+            android:id="@+id/action_processListFragment_to_processCreationFragment"
+            app:destination="@id/processCreationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/processCreationFragment"
+        android:name="guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.process.creation.ProcessCreationFragment"
+        android:label="fragment_process_creation"
+        tools:layout="@layout/fragment_process_creation">
+
+        <argument
+            android:name="mode"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.about.AboutFragment"
+        android:label="@string/sobre_title"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/bladeListFragment"
+        android:name="guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.blades.BladeListFragment"
+        android:label="@string/blade_list"
+        tools:layout="@layout/fragment_blade_list" />
+    <fragment
+        android:id="@+id/matListFragment"
+        android:name="guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.mat.MatListFragment"
+        android:label="@string/mat_list"
+        tools:layout="@layout/fragment_mat_list" />
+</navigation>

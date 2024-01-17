@@ -1,38 +1,16 @@
 <resources>
     <string name="app_name">Quick Setup Guide for Cutting Plotter</string>
 
-    <string name="papelopaline">Opaline Paper</string>
-    <string name="papellinho">Linen Paper</string>
-    <string name="papelverge">Verge Paper</string>
-
-    <string name="canson">Canson</string>
-    <string name="chamex">Chamex</string>
-    <string name="spiral">Spiral</string>
-
-    <string name="roxo">Purple</string>
-    <string name="turquesa">Turquoise</string>
-
-    <string name="superforte">Super Strong</string>
-    <string name="standard">Standard</string>
-
-    <string name="delicado">Delicate</string>
-    <string name="pesado">Heavy</string>
-    <string name="title_activity_lista_processo">ProcessListActivity</string>
-
-    <string name="cortepesado">Heavy Cutting\n</string>
-    <string name="cortedelicado">Delicate Cutting</string>
     <string name="menu_item_adicionar">Add</string>
-    <string name="context_menu_item_editar">Edit</string>
-    <string name="context_menu_item_excluir">Delete</string>
-    <string name="menu_item_salvar">Save</string>
-    <string name="menu_item_limpar">Clear</string>
-    <string name="descricaoapp">App for quick consultation of configuration parameters for the cutting plotter according to the desired material and process</string>
-    <string name="autor">Author:</string>
-    <string name="nomeautor">Guilherme Pires Groff Benedeti</string>
-    <string name="cursolabel">Course:</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="descricao_app">App for quick consultation of configuration parameters for the cutting plotter according to the desired material and process</string>
+    <string name="author">Author:</string>
+    <string name="author_name">Guilherme Pires Groff Benedeti</string>
+    <string name="course">Course:</string>
     <string name="nomecurso">Specialization in Java Development</string>
-    <string name="labelemail">Email:</string>
-    <string name="emailautor">guilherme.benedeti@utfpr.edu.br</string>
+    <string name="label_email">Email:</string>
+    <string name="author_email">guilherme.benedeti@utfpr.edu.br</string>
     <string name="labelMaterial">Material</string>
     <string name="labelgramatura">Weight:</string>
     <string name="labelmarca">Brand</string>
@@ -63,27 +41,25 @@
     <string name="sim">Yes</string>
     <string name="nao">No</string>
     <string name="home">Home</string>
-    <string name="insumos_subheader_titte">Insumos\n</string>
-    <string name="tapetes_item">Tapetes\n</string>
-    <string name="laminas_item">Laminas</string>
-    <string name="processos_title">Processos</string>
-    <string name="corte_tab_tittle">Corte</string>
-    <string name="desenho_tab_tittle">Desenho</string>
+    <string name="insumos_subheader_titte">Consumables</string>
+    <string name="processos_title">Process List</string>
+    <string name="corte_tab_tittle">Cut</string>
+    <string name="desenho_tab_tittle">Draw</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
     <string name="thickness">Thickness</string>
     <string name="pen">Pen</string>
     <string name="blade_color">Blade Color</string>
     <string name="cut_strength">Cut Strength</string>
-    <string name="hyphen">-</string>
+    <string name="hyphen" translatable="false">-</string>
     <string name="confirmar_excluir_lamina">Are you sure you want to delete this blade?</string>
     <string name="sobre_title">About</string>
-    <string name="laminas_title">Blades</string>
     <string name="clear">Clear</string>
     <string name="save">Save</string>
-    <string name="label_blade_color">Blade Color</string>
     <string name="label_blade_cut_strength">Cut Strength</string>
     <string name="new_blade">New Blade</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mode" translatable="false">mode</string>
+    <string name="mat_list">Mat List</string>
+    <string name="blade_list">Blade List</string>
+    <string name="utfpr_image_description">UTFPR Logo</string>
 </resources>
