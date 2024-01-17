@@ -62,4 +62,5 @@
     <string name="mat_list">Mat List</string>
     <string name="blade_list">Blade List</string>
     <string name="utfpr_image_description">UTFPR Logo</string>
+    <string name="blade">Blade</string>
 </resources>

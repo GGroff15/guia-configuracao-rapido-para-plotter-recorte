@@ -39,7 +39,6 @@ public class ProcessDrawAdapter extends ProcessAdapter<ProcessDrawAdapter.Proces
             this.textViewTapeteForca = itemView.findViewById(R.id.textViewForcaTapete);
             this.textViewPressao = itemView.findViewById(R.id.textViewPressao);
             this.textViewIsCorte = itemView.findViewById(R.id.textViewIsCorte);
-            this.textViewCanetaCor = itemView.findViewById(R.id.textViewCanetaCor);
             this.textViewIsTecido = itemView.findViewById(R.id.isTecido);
         }
     }

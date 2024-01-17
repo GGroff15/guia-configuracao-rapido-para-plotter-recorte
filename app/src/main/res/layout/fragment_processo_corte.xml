@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_marginTop="16dp"
     android:layout_marginBottom="16dp"
+    android:orientation="vertical"
     app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
@@ -15,35 +15,22 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/labelNomeMaterial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labelMaterial" />
-
-        <TextView
             android:id="@+id/textViewMaterialNome"
+            style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:gravity="end"
             android:text="TextView" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/labelGramaturaMaterial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labelgramatura" />
 
         <TextView
             android:id="@+id/textViewGramatura"
+            style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
             android:text="TextView" />
 
     </LinearLayout>
@@ -56,35 +43,41 @@
 
         <TextView
             android:id="@+id/labelCorTapete"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/labelcortapete" />
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="@string/labeltapete" />
 
-        <TextView
-            android:id="@+id/textViewTapeteCor"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_weight="5"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textViewTapeteCor"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
+            <TextView
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="@string/hyphen" />
 
-        <TextView
-            android:id="@+id/labelForcaTapete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labelforcatapete" />
+            <TextView
+                android:id="@+id/textViewForcaTapete"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-        <TextView
-            android:id="@+id/textViewForcaTapete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -96,12 +89,15 @@
 
         <TextView
             android:id="@+id/labelPressao"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@string/labelpressaferramenta" />
 
         <TextView
             android:id="@+id/textViewPressao"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />
@@ -116,12 +112,15 @@
 
         <TextView
             android:id="@+id/labelCorte"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@string/labeltipoprocesso" />
 
         <TextView
             android:id="@+id/textViewIsCorte"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />
@@ -136,35 +135,40 @@
 
         <TextView
             android:id="@+id/labelLaminaCor"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/labelcorlamina" />
+            android:layout_marginEnd="16dp"
+            android:text="@string/blade" />
 
-        <TextView
-            android:id="@+id/textViewLaminaCor"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textViewLaminaCor"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
+            <TextView
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="@string/hyphen" />
 
-        <TextView
-            android:id="@+id/labelTipoMaterial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labeltipocorte" />
+            <TextView
+                android:id="@+id/textViewLaminaMaterial"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-        <TextView
-            android:id="@+id/textViewLaminaMaterial"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -176,12 +180,15 @@
 
         <TextView
             android:id="@+id/labelProfundidadeLamina"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@string/labelprofundidadelamina" />
 
         <TextView
             android:id="@+id/textViewProfundidadeLamina"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />
@@ -196,12 +203,15 @@
 
         <TextView
             android:id="@+id/labelIsTecido"
+            style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@string/labeletecido" />
 
         <TextView
             android:id="@+id/isTecido"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />
