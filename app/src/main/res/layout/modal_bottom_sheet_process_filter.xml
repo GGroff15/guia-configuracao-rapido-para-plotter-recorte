@@ -44,27 +44,12 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/filtro_gramatura"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:hint="@string/labelgramatura">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_filtro_gramatura"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="number"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <Button
                     android:id="@+id/filtro_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/search"
+                    android:layout_gravity="end"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         </LinearLayout>
