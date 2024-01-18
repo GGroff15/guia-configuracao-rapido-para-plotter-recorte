@@ -31,8 +31,8 @@ public class ProcessListMenuProvider implements MenuProvider {
 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-        menuInflater.inflate(R.menu.principal_opcoes, menu);
-        menuInflater.inflate(R.menu.lista_opcoes, menu);
+        menuInflater.inflate(R.menu.app_options_menu, menu);
+        menuInflater.inflate(R.menu.process_list_menu, menu);
     }
 
     @Override

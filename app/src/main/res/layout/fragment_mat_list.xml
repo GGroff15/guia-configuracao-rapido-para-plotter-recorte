@@ -23,6 +23,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@string/menu_item_adicionar"
-        android:src="@drawable/baseline_add_24"/>
+        android:src="@android:drawable/ic_input_add"/>
 
 </FrameLayout>
