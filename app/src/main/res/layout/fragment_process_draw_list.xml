@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.fragments.process.draw.ProcessDrawFragment"
-    tools:listitem="@layout/fragment_processo_desenho" />
+    tools:listitem="@layout/fragment_process_draw" />

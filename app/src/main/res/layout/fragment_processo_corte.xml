@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewMaterialNome"
+            android:id="@+id/text_view_material_name"
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/textViewGramatura"
+            android:id="@+id/text_view_gramatura"
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textViewTapeteCor"
+                android:id="@+id/text_view_mat_color"
                 style="@style/TextAppearance.Material3.BodyMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 android:text="@string/hyphen" />
 
             <TextView
-                android:id="@+id/textViewForcaTapete"
+                android:id="@+id/text_view_mat_strength"
                 style="@style/TextAppearance.Material3.BodyMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             android:text="@string/labelpressaferramenta" />
 
         <TextView
-            android:id="@+id/textViewPressao"
+            android:id="@+id/text_view_pressure"
             style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
             android:text="@string/labeltipoprocesso" />
 
         <TextView
-            android:id="@+id/textViewIsCorte"
+            android:id="@+id/text_view_is_corte"
             style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
             android:text="@string/labeletecido" />
 
         <TextView
-            android:id="@+id/isTecido"
+            android:id="@+id/is_tecido"
             style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

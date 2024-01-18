@@ -19,60 +19,58 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Process
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.adapter.process.ProcessAdapter;
 
-public class ProcessDrawAdapter extends ProcessAdapter<ProcessDrawAdapter.ProcessoHolder> {
+public class ProcessDrawAdapter extends ProcessAdapter<ProcessDrawAdapter.ProcessHolder> {
 
-   public static class ProcessoHolder extends RecyclerView.ViewHolder {
-        public TextView textViewMaterialNome;
+   public static class ProcessHolder extends RecyclerView.ViewHolder {
+        public TextView textViewMaterialName;
         public TextView textViewMaterialGramatura;
-        public TextView textViewTapeteCor;
-        public TextView textViewTapeteForca;
-        public TextView textViewPressao;
-        public TextView textViewIsCorte;
-        public TextView textViewCanetaCor;
+        public TextView textViewMatColor;
+        public TextView textViewMatStrength;
+        public TextView textViewPressure;
+        public TextView textViewProcessType;
+        public TextView textViewPenType;
         public TextView textViewIsTecido;
 
-        public ProcessoHolder(@NonNull View itemView) {
+        public ProcessHolder(@NonNull View itemView) {
             super(itemView);
-            this.textViewMaterialNome = itemView.findViewById(R.id.textViewMaterialNome);
-            this.textViewMaterialGramatura = itemView.findViewById(R.id.textViewGramatura);
-            this.textViewTapeteCor = itemView.findViewById(R.id.textViewTapeteCor);
-            this.textViewTapeteForca = itemView.findViewById(R.id.textViewForcaTapete);
-            this.textViewPressao = itemView.findViewById(R.id.textViewPressao);
-            this.textViewIsCorte = itemView.findViewById(R.id.textViewIsCorte);
-            this.textViewIsTecido = itemView.findViewById(R.id.isTecido);
+            this.textViewMaterialName = itemView.findViewById(R.id.text_view_material_name);
+            this.textViewMaterialGramatura = itemView.findViewById(R.id.text_view_gramatura);
+            this.textViewMatColor = itemView.findViewById(R.id.text_view_mat_color);
+            this.textViewMatStrength = itemView.findViewById(R.id.text_view_mat_strength);
+            this.textViewPressure = itemView.findViewById(R.id.text_view_pressure);
+            this.textViewProcessType = itemView.findViewById(R.id.text_view_is_corte);
+            this.textViewIsTecido = itemView.findViewById(R.id.is_tecido);
+            this.textViewPenType = itemView.findViewById(R.id.pen_type);
         }
     }
-    public ProcessDrawAdapter(Context context, List<Processo> processos, FragmentActivity activity) {
-        super(context, activity, processos);
-    }
-
-    public ProcessDrawAdapter(Context context, List<Processo> processos, String brand, FragmentActivity activity) {
-        super(context, activity, processos, brand);
+    public ProcessDrawAdapter(Context context, List<Processo> processList, FragmentActivity activity) {
+        super(context, activity, processList);
     }
 
     @NonNull
     @Override
-    public ProcessoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_processo_desenho, parent, false);
-        return new ProcessoHolder(view);
+    public ProcessHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_process_draw, parent, false);
+        return new ProcessHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProcessoHolder holder, int position) {
-        Processo processo = processos.get(position);
+    public void onBindViewHolder(@NonNull ProcessHolder holder, int position) {
+        Processo process = processList.get(position);
 
         AsyncTask.execute(() -> {
             PlotterDatabase database = PlotterDatabase.getDatabase(this.context);
-            Mat tapete = database.tapeteDao().findById(processo.getTapete());
+            Mat mat = database.tapeteDao().findById(process.getTapete());
 
             activity.runOnUiThread(() -> {
-                holder.textViewMaterialNome.setText(processo.getMaterial());
-                holder.textViewMaterialGramatura.setText(String.valueOf(processo.getGramatura()));
-                holder.textViewTapeteCor.setText(tapete.getCor());
-                holder.textViewTapeteForca.setText(tapete.getForcaAderencia());
-                holder.textViewPressao.setText(String.valueOf(processo.getPressao()));
-                holder.textViewIsCorte.setText(processo.getTipo());
-                holder.textViewIsTecido.setText(processo.getTecido());
+                holder.textViewMaterialName.setText(process.getMaterial());
+                holder.textViewMaterialGramatura.setText(String.valueOf(process.getGramatura()));
+                holder.textViewMatColor.setText(mat.getCor());
+                holder.textViewMatStrength.setText(mat.getForcaAderencia());
+                holder.textViewPressure.setText(String.valueOf(process.getPressao()));
+                holder.textViewProcessType.setText(process.getTipo());
+                holder.textViewIsTecido.setText(process.getTecido());
+                holder.textViewPenType.setText(process.getPen());
             });
         });
 
@@ -83,12 +81,11 @@ public class ProcessDrawAdapter extends ProcessAdapter<ProcessDrawAdapter.Proces
 
         holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             menu.add(0, v.getId(), 0, context.getString(R.string.edit)).setOnMenuItemClickListener(menuItem -> {
-                editar(selectedPosition);
+                edit(selectedPosition);
                 return true;
             });
             menu.add(0, v.getId(), 0, context.getString(R.string.delete)).setOnMenuItemClickListener(menuItem -> {
-                excluir(selectedPosition);
-                //new ViewModelFactory(activity).createProcessDrawListViewModel(new ProcessService(context)).update();
+                delete(selectedPosition);
                 return true;
             });
         });
@@ -96,17 +93,12 @@ public class ProcessDrawAdapter extends ProcessAdapter<ProcessDrawAdapter.Proces
 
     @Override
     public long getItemId(int i) {
-        return processos.get(i).getId();
+        return processList.get(i).getId();
     }
 
     @Override
     public int getItemCount() {
-        return processos.size();
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
+        return processList.size();
     }
 
 }

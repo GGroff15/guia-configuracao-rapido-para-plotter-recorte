@@ -36,16 +36,16 @@ public class ProcessCutAdapter extends ProcessAdapter<ProcessCutAdapter.Processo
 
         public ProcessoHolder(@NonNull View itemView) {
             super(itemView);
-            this.textViewMaterialNome = itemView.findViewById(R.id.textViewMaterialNome);
-            this.textViewMaterialGramatura = itemView.findViewById(R.id.textViewGramatura);
-            this.textViewTapeteCor = itemView.findViewById(R.id.textViewTapeteCor);
-            this.textViewTapeteForca = itemView.findViewById(R.id.textViewForcaTapete);
-            this.textViewPressao = itemView.findViewById(R.id.textViewPressao);
-            this.textViewIsCorte = itemView.findViewById(R.id.textViewIsCorte);
+            this.textViewMaterialNome = itemView.findViewById(R.id.text_view_material_name);
+            this.textViewMaterialGramatura = itemView.findViewById(R.id.text_view_gramatura);
+            this.textViewTapeteCor = itemView.findViewById(R.id.text_view_mat_color);
+            this.textViewTapeteForca = itemView.findViewById(R.id.text_view_mat_strength);
+            this.textViewPressao = itemView.findViewById(R.id.text_view_pressure);
+            this.textViewIsCorte = itemView.findViewById(R.id.text_view_is_corte);
             this.textViewLaminaCor = itemView.findViewById(R.id.textViewLaminaCor);
             this.textViewLaminaMaterial = itemView.findViewById(R.id.textViewLaminaMaterial);
             this.textViewProfundidadeLamina= itemView.findViewById(R.id.textViewProfundidadeLamina);
-            this.textViewIsTecido = itemView.findViewById(R.id.isTecido);
+            this.textViewIsTecido = itemView.findViewById(R.id.is_tecido);
         }
 
     }
@@ -62,7 +62,7 @@ public class ProcessCutAdapter extends ProcessAdapter<ProcessCutAdapter.Processo
 
     @Override
     public void onBindViewHolder(@NonNull ProcessoHolder holder, int position) {
-        Processo processo = processos.get(position);
+        Processo processo = processList.get(position);
 
         AsyncTask.execute(() -> {
             PlotterDatabase database = PlotterDatabase.getDatabase(this.context);
@@ -91,11 +91,11 @@ public class ProcessCutAdapter extends ProcessAdapter<ProcessCutAdapter.Processo
 
         holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             menu.add(0, v.getId(), 0, context.getString(R.string.edit)).setOnMenuItemClickListener(menuItem -> {
-                editar(selectedPosition);
+                edit(selectedPosition);
                 return true;
             });
             menu.add(0, v.getId(), 0, context.getString(R.string.delete)).setOnMenuItemClickListener(menuItem -> {
-                excluir(selectedPosition);
+                delete(selectedPosition);
                 //new ViewModelFactory(activity).createProcessCutListViewModel(new ProcessService(context)).update();
                 return true;
             });
@@ -104,12 +104,12 @@ public class ProcessCutAdapter extends ProcessAdapter<ProcessCutAdapter.Processo
 
     @Override
     public long getItemId(int i) {
-        return processos.get(i).getId();
+        return processList.get(i).getId();
     }
 
     @Override
     public int getItemCount() {
-        return processos.size();
+        return processList.size();
     }
 
 }

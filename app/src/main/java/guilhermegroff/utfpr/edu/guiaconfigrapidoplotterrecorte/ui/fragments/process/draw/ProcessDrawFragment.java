@@ -35,6 +35,6 @@ public class ProcessDrawFragment extends ProcessoFragment {
         ProcessDrawListViewModel viewModel = viewModelFactory.createProcessDrawListViewModel(service);
         viewModel.getProcessListLiveData().observe(getViewLifecycleOwner(), processList -> recyclerView.setAdapter(new ProcessDrawAdapter(getContext(), processList, getActivity())));
 
-        return inflater.inflate(R.layout.fragment_processo_desenho_list, container, false);
+        return inflater.inflate(R.layout.fragment_process_draw_list, container, false);
     }
 }
