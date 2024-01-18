@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/bottom_sheet_add_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/new_item"

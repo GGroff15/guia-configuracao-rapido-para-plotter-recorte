@@ -44,6 +44,7 @@ public class ModalBottomSheetAddMat extends ModalBottomSheetAdd {
             }
 
             if (mode == EDIT) {
+                title.setText(getString(R.string.edit));
                 int id = bundle.getInt(ID);
                 this.mat = service.search(id);
             }

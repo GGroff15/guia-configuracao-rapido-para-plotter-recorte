@@ -27,10 +27,12 @@ public abstract class ModalBottomSheetAdd extends BottomSheetDialogFragment {
     protected Button buttonClear;
     protected TextInputEditText inputEditTextColor;
     protected TextInputEditText inputEditTextStrenght;
+    protected TextView title;
     protected int mode;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        this.title = view.findViewById(R.id.bottom_sheet_add_title);
 
         this.inputEditTextColor = view.findViewById(R.id.input_color);
         this.inputEditTextStrenght = view.findViewById(R.id.input_strength);
