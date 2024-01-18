@@ -1,9 +1,10 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.mat;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 
@@ -29,6 +31,7 @@ public abstract class ModalBottomSheetAdd extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         this.inputEditTextColor = view.findViewById(R.id.input_color);
         this.inputEditTextStrenght = view.findViewById(R.id.input_strength);
 

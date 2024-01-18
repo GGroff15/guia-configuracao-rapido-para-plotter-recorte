@@ -15,7 +15,7 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.ProcessoEnum;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.adapter.process.ProcessAdapter;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ModalBottomSheetProcessFilter;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet.ModalBottomSheetProcessFilter;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ProcessListViewModel;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
 

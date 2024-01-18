@@ -26,15 +26,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_blade"
+            android:text="@string/new_item"
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:textAlignment="center"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/blade_color"
+            android:id="@+id/element_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:hint="@string/blade_color">
+            android:hint="@string/color">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_color"
@@ -46,11 +47,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/blade_cut_strength"
+            android:id="@+id/element_attribute"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:hint="@string/label_blade_cut_strength">
+            android:hint="@string/strength">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_strength"

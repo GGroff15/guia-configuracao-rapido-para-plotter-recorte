@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.LaminaService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.adapter.blade.BladeAdapter;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet.ModalBottomSheetAddBlade;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.BladeListViewModel;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
 

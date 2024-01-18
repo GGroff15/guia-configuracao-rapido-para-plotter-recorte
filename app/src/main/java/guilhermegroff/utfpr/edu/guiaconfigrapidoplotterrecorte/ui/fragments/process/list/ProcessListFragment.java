@@ -7,24 +7,21 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ThemeService;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ModalBottomSheetProcessFilter;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet.ModalBottomSheetProcessFilter;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.process.creation.ProcessCreationFragment;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.menuprovider.ProcessListMenuProvider;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.adapter.process.ProcessSlidePagerAdapter;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ProcessListViewModel;
 
 public class ProcessListFragment extends Fragment {
 

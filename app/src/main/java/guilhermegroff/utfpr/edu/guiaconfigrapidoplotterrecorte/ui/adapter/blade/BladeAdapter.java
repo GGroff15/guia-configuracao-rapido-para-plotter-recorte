@@ -16,10 +16,8 @@ import java.util.List;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Blade;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.dialog.DeleteConfirmationDialog;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.blades.ModalBottomSheetAddBlade;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet.ModalBottomSheetAddBlade;
 
 public class BladeAdapter extends RecyclerView.Adapter<BladeAdapter.LaminaHolder> {
 

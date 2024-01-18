@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.TapeteService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.adapter.mat.MatAdapter;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet.ModalBottomSheetAddMat;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.MatListViewModel;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
 

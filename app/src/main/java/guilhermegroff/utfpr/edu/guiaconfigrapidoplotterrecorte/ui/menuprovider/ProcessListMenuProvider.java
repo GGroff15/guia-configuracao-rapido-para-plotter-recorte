@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ThemeService;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.ModalBottomSheetProcessFilter;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet.ModalBottomSheetProcessFilter;
 
 public class ProcessListMenuProvider implements MenuProvider {
 

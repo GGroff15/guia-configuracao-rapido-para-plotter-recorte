@@ -15,10 +15,8 @@ import java.util.List;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Mat;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.persistencia.PlotterDatabase;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.dialog.DeleteConfirmationDialog;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.mat.ModalBottomSheetAddMat;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet.ModalBottomSheetAddMat;
 
 public class MatAdapter extends RecyclerView.Adapter<MatAdapter.MatHolder> {
 

@@ -1,4 +1,4 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet;
 
 import android.content.Intent;
 import android.os.AsyncTask;

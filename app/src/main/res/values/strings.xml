@@ -68,4 +68,8 @@
     <string name="cleared_field">Cleared Fields\n</string>
     <string name="required_field_error">Please fill all required fields</string>
     <string name="label_pen_type">Pen Type</string>
+    <string name="color">Color</string>
+    <string name="strength">Strenght</string>
+    <string name="new_mat">New Mat</string>
+    <string name="new_item">New</string>
 </resources>

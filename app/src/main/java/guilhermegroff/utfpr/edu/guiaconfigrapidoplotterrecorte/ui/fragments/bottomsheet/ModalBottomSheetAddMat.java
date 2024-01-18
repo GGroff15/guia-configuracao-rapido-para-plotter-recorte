@@ -1,4 +1,4 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.blades;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,23 +12,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Blade;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.LaminaService;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.mat.ModalBottomSheetAdd;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.BladeListViewModel;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Mat;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.TapeteService;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.MatListViewModel;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
 
-public class ModalBottomSheetAddBlade extends ModalBottomSheetAdd {
+public class ModalBottomSheetAddMat extends ModalBottomSheetAdd {
 
-    private LaminaService service;
-    private Blade lamina;
-    private BladeListViewModel viewModel;
+    private TapeteService service;
+    private Mat mat;
+    private MatListViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.service = new LaminaService(this.getContext());
-        viewModel = new ViewModelFactory(requireActivity()).createBladeListViewModel(service);
+        this.service = new TapeteService(getContext());
+        viewModel = new ViewModelFactory(requireActivity()).createMatListViewModel(service);
         return inflater.inflate(R.layout.modal_bottom_sheet_add, container, false);
     }
 
@@ -41,35 +40,36 @@ public class ModalBottomSheetAddBlade extends ModalBottomSheetAdd {
 
         AsyncTask.execute(() -> {
             if (mode == NEW) {
-                this.lamina = new Blade("", "");
+                this.mat = new Mat("", "");
             }
 
             if (mode == EDIT) {
                 int id = bundle.getInt(ID);
-                this.lamina = service.buscar(id);
+                this.mat = service.search(id);
             }
 
             getActivity().runOnUiThread(() -> {
-                this.inputEditTextColor.setText(lamina.getCor());
-                this.inputEditTextStrenght.setText(lamina.getTipoMaterial());
+                this.inputEditTextColor.setText(mat.getCor());
+                this.inputEditTextStrenght.setText(mat.getForcaAderencia());
             });
         });
     }
 
-    protected void save(View v) {
+    @Override
+    protected void save(View view) {
         String color = inputEditTextColor.getText().toString();
-        String cutType = inputEditTextStrenght.getText().toString();
+        String strength = inputEditTextStrenght.getText().toString();
 
-        this.lamina.setCor(color);
-        this.lamina.setTipoMaterial(cutType);
+        this.mat.setCor(color);
+        this.mat.setForcaAderencia(strength);
 
         AsyncTask.execute(() -> {
             if (mode == NEW) {
-                this.service.save(lamina);
+                this.service.save(mat);
             }
 
             if (mode == EDIT) {
-                this.service.update(lamina);
+                this.service.update(mat);
             }
 
             viewModel.update();
@@ -77,10 +77,11 @@ public class ModalBottomSheetAddBlade extends ModalBottomSheetAdd {
         });
     }
 
-    public void edit(FragmentManager manager, String tag, Blade lamina) {
+    public void edit(FragmentManager manager, String tag, Mat mat) {
         this.intent = new Intent();
         intent.putExtra(MODE, EDIT);
-        intent.putExtra(ID, lamina.getId());
+        intent.putExtra(ID, mat.getId());
         show(manager, tag);
     }
+
 }

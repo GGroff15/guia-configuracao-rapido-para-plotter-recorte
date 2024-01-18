@@ -1,4 +1,4 @@
-package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.mat;
+package guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.fragments.bottomsheet;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,22 +12,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.R;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Mat;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.TapeteService;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.MatListViewModel;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Blade;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.LaminaService;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.BladeListViewModel;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
 
-public class ModalBottomSheetAddMat extends ModalBottomSheetAdd {
+public class ModalBottomSheetAddBlade extends ModalBottomSheetAdd {
 
-    private TapeteService service;
-    private Mat mat;
-    private MatListViewModel viewModel;
+    private LaminaService service;
+    private Blade lamina;
+    private BladeListViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.service = new TapeteService(getContext());
-        viewModel = new ViewModelFactory(requireActivity()).createMatListViewModel(service);
+        this.service = new LaminaService(this.getContext());
+        viewModel = new ViewModelFactory(requireActivity()).createBladeListViewModel(service);
         return inflater.inflate(R.layout.modal_bottom_sheet_add, container, false);
     }
 
@@ -40,36 +40,35 @@ public class ModalBottomSheetAddMat extends ModalBottomSheetAdd {
 
         AsyncTask.execute(() -> {
             if (mode == NEW) {
-                this.mat = new Mat("", "");
+                this.lamina = new Blade("", "");
             }
 
             if (mode == EDIT) {
                 int id = bundle.getInt(ID);
-                this.mat = service.search(id);
+                this.lamina = service.buscar(id);
             }
 
             getActivity().runOnUiThread(() -> {
-                this.inputEditTextColor.setText(mat.getCor());
-                this.inputEditTextStrenght.setText(mat.getForcaAderencia());
+                this.inputEditTextColor.setText(lamina.getCor());
+                this.inputEditTextStrenght.setText(lamina.getTipoMaterial());
             });
         });
     }
 
-    @Override
-    protected void save(View view) {
+    protected void save(View v) {
         String color = inputEditTextColor.getText().toString();
-        String strength = inputEditTextStrenght.getText().toString();
+        String cutType = inputEditTextStrenght.getText().toString();
 
-        this.mat.setCor(color);
-        this.mat.setForcaAderencia(strength);
+        this.lamina.setCor(color);
+        this.lamina.setTipoMaterial(cutType);
 
         AsyncTask.execute(() -> {
             if (mode == NEW) {
-                this.service.save(mat);
+                this.service.save(lamina);
             }
 
             if (mode == EDIT) {
-                this.service.update(mat);
+                this.service.update(lamina);
             }
 
             viewModel.update();
@@ -77,11 +76,10 @@ public class ModalBottomSheetAddMat extends ModalBottomSheetAdd {
         });
     }
 
-    public void edit(FragmentManager manager, String tag, Mat mat) {
+    public void edit(FragmentManager manager, String tag, Blade lamina) {
         this.intent = new Intent();
         intent.putExtra(MODE, EDIT);
-        intent.putExtra(ID, mat.getId());
+        intent.putExtra(ID, lamina.getId());
         show(manager, tag);
     }
-
 }
