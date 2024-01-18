@@ -23,6 +23,7 @@ public class Processo {
     private Integer lamina;
     private Integer profundidadeLamina;
     private String tecido;
+    private String pen;
 
     public Processo() {
 
@@ -98,5 +99,13 @@ public class Processo {
 
     public int getGramatura() {
         return gramatura;
+    }
+
+    public String getPen() {
+        return pen;
+    }
+
+    public void setPen(String pen) {
+        this.pen = pen;
     }
 }

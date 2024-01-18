@@ -63,4 +63,8 @@
     <string name="blade_list">Blade List</string>
     <string name="utfpr_image_description">UTFPR Logo</string>
     <string name="blade">Blade</string>
+    <string name="scan_n_cut_pen">Scan n\' Cut Pen</string>
+    <string name="universal_adapter">Universal Adapter</string>
+    <string name="cleared_field">Cleared Fields\n</string>
+    <string name="required_field_error">Please fill all required fields</string>
 </resources>

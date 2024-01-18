@@ -32,8 +32,8 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.LaminaSer
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.ProcessService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.service.TapeteService;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.ui.menuprovider.ProcessCreationMenuProvider;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ProcessCutListViewModel;
-import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ProcessDrawListViewModel;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.BladeListViewModel;
+import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.MatListViewModel;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.viewmodel.ViewModelFactory;
 
 public class ProcessCreationFragment extends Fragment {
@@ -61,11 +61,11 @@ public class ProcessCreationFragment extends Fragment {
     private EditText inputNomeMaterial;
     private EditText inputGramaturaMaterial;
     private EditText inputPressao;
-    private Spinner tipoTapete;
+    private Spinner matSpinner;
     private RadioGroup radioGroupOperacao;
-    private EditText inputEspessuraCaneta;
+    private RadioGroup radioPenType;
     private EditText inputProfundidadeLamina;
-    private Spinner corLamina;
+    private Spinner bladeSpinner;
     private CheckBox checkBoxIsTecido;
     private List<Mat> listaTapetes;
     private List<Blade> listaLaminas;
@@ -75,6 +75,8 @@ public class ProcessCreationFragment extends Fragment {
     private ProcessService processoService;
     private ProcessCreationFragmentHelper helper;
 
+    private ViewModelFactory viewModelFactory;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,7 @@ public class ProcessCreationFragment extends Fragment {
         laminaService = new LaminaService(getContext());
         tapeteService = new TapeteService(getContext());
         processoService = new ProcessService(getContext());
+        viewModelFactory = new ViewModelFactory(this);
 
         helper = new ProcessCreationFragmentHelper(this);
 
@@ -111,12 +114,12 @@ public class ProcessCreationFragment extends Fragment {
         radioGroupOperacao = view.findViewById(R.id.radioGroup);
         radioGroupOperacao.setOnCheckedChangeListener(getOnCheckedChangeListener());
         inputPressao = view.findViewById(R.id.inputPressao);
-        inputEspessuraCaneta = view.findViewById(R.id.inputEspessuraCaneta);
         inputProfundidadeLamina = view.findViewById(R.id.inputProfundidadeLamina);
         checkBoxIsTecido = view.findViewById(R.id.checkBoxMaterialBase);
+        radioPenType = view.findViewById(R.id.pen_type);
 
-        carregarTapetes();
-        carregarLaminas();
+        loadMats();
+        loadBlades();
 
         if (modo == ModeEnum.NEW.getCode()) {
             processo = new Processo();
@@ -124,7 +127,6 @@ public class ProcessCreationFragment extends Fragment {
             AsyncTask.execute(() -> {
 
                 PlotterDatabase database = PlotterDatabase.getDatabase(getContext());
-
                 processo = database.processoDao().findById(id);
 
                 Blade lamina = null;
@@ -151,14 +153,13 @@ public class ProcessCreationFragment extends Fragment {
             String tipoProcesso = processo.getTipo();
             int tipoTapete = processo.getTapete();
 
-            String espessuraCaneta = "";
-            this.inputEspessuraCaneta.setText(espessuraCaneta);
-
             int profundidadeLamina = processo.getProfundidadeLamina();
+
+            String pen = processo.getPen();
 
             for (int i = 0; i < listaTapetes.size(); i++) {
                 if (listaTapetes.get(i).getId() == (tipoTapete)) {
-                    this.tipoTapete.setSelection(i);
+                    this.matSpinner.setSelection(i);
                     break;
                 }
             }
@@ -169,11 +170,17 @@ public class ProcessCreationFragment extends Fragment {
                 this.radioGroupOperacao.check(R.id.radioButtonDesenho);
             }
 
+            if (pen.equals(PenEnum.SCAN_N_CUT.getType())) {
+                this.radioPenType.check(R.id.radioButtonScanNCutPen);
+            } else {
+                this.radioPenType.check(R.id.radioButtonUniversalAdapter);
+            }
+
             this.inputProfundidadeLamina.setText(String.valueOf(profundidadeLamina));
 
             for (int i = 0; i < listaLaminas.size(); i++) {
                 if (listaLaminas.get(i).getId() == lamina.getId()) {
-                    this.corLamina.setSelection(i);
+                    this.bladeSpinner.setSelection(i);
                     break;
                 }
             }
@@ -182,53 +189,37 @@ public class ProcessCreationFragment extends Fragment {
         });
     }
 
-    private void carregarLaminas() {
-        AsyncTask.execute(() -> {
-            listaLaminas = this.laminaService.listar();
-            getActivity().runOnUiThread(() -> {
-                ArrayAdapter<Blade> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaLaminas);
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                corLamina = getView().findViewById(R.id.inputCorLamina);
-                corLamina.setAdapter(spinnerAdapter);
-            });
+    private void loadBlades() {
+        BladeListViewModel viewModel = viewModelFactory.createBladeListViewModel(laminaService);
+        viewModel.getBladeList().observe(getViewLifecycleOwner(), blades -> {
+            listaLaminas = blades;
+            ArrayAdapter<Blade> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaLaminas);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            bladeSpinner = getView().findViewById(R.id.spinnerBlade);
+            bladeSpinner.setAdapter(spinnerAdapter);
         });
     }
 
-    private void carregarTapetes() {
-        AsyncTask.execute(() -> {
-            listaTapetes = tapeteService.listar();
-            getActivity().runOnUiThread(() -> {
-                ArrayAdapter<Mat> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaTapetes);
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                tipoTapete = getView().findViewById(R.id.tipoTapete);
-                tipoTapete.setAdapter(spinnerAdapter);
-            });
+    private void loadMats() {
+        MatListViewModel viewModel = viewModelFactory.createMatListViewModel(tapeteService);
+        viewModel.getListMat().observe(getViewLifecycleOwner(), mats -> {
+            listaTapetes = mats;
+            ArrayAdapter<Mat> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaTapetes);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            matSpinner = getView().findViewById(R.id.spinnerMat);
+            matSpinner.setAdapter(spinnerAdapter);
         });
     }
 
-    private void limpar() {
-        tipoTapete.setSelection(0);
+    private void clear() {
+        matSpinner.setSelection(0);
         inputNomeMaterial.setText("");
         inputPressao.setText("");
         radioGroupOperacao.clearCheck();
-
-        limparCamposDesenho();
-
         limparCamposCorte();
     }
 
-    public void salvar(MenuItem item) {
-        salvar();
-    }
-
-    public void limpar(MenuItem item) {
-        limpar();
-        String text = "Campos Limpos";
-        Toast.makeText(getContext(), text,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    private void salvar() {
+    public void save(MenuItem item) {
         boolean isCamposValidos = validar();
         if(isCamposValidos) {
 
@@ -238,11 +229,11 @@ public class ProcessCreationFragment extends Fragment {
             Integer weight = Integer.valueOf(inputGramaturaMaterial.getText().toString());
             processo.setGramatura(weight);
 
-            String pressao = inputPressao.getText().toString();
-            processo.setPressao(Integer.valueOf(pressao));
+            String pressure = inputPressao.getText().toString();
+            processo.setPressao(Integer.valueOf(pressure));
 
-            Mat tapete = (Mat) tipoTapete.getSelectedItem();
-            processo.setTapete(tapete.getId());
+            Mat mat = (Mat) matSpinner.getSelectedItem();
+            processo.setTapete(mat.getId());
 
             int checkedRadioButtonId = radioGroupOperacao.getCheckedRadioButtonId();
 
@@ -252,7 +243,7 @@ public class ProcessCreationFragment extends Fragment {
                 String profundidadeLamina = inputProfundidadeLamina.getText().toString();
                 processo.setProfundidadeLamina(Integer.valueOf(profundidadeLamina));
 
-                Blade lamina = (Blade) corLamina.getSelectedItem();
+                Blade lamina = (Blade) bladeSpinner.getSelectedItem();
                 processo.setLamina(lamina.getId());
 
                 if (checkBoxIsTecido.isChecked()) {
@@ -262,21 +253,33 @@ public class ProcessCreationFragment extends Fragment {
                 }
             }
 
-            AsyncTask.execute(() -> {
-                if (checkedRadioButtonId == R.id.radioButtonDesenho) {
-                    processo.setTipo(ProcessoEnum.DESENHO.getTipo());
+            if (checkedRadioButtonId == R.id.radioButtonDesenho) {
+                processo.setTipo(ProcessoEnum.DESENHO.getTipo());
+                int checkedRadioButtonPen = radioPenType.getCheckedRadioButtonId();
+                if (checkedRadioButtonPen == R.id.radioButtonScanNCutPen) {
+                    processo.setPen(PenEnum.SCAN_N_CUT.getType());
+                } else {
+                    processo.setPen(PenEnum.UNIVERSAL_ADAPTER.getType());
                 }
+            }
 
+            AsyncTask.execute(() -> {
                 if (modo == ModeEnum.NEW.getCode()) {
                     processoService.save(processo);
                 } else {
                     processoService.update(processo);
                 }
-
             });
 
             Navigation.findNavController(getView()).navigateUp();
         }
+    }
+
+    public void clear(MenuItem item) {
+        clear();
+        String text = getString(R.string.cleared_field);
+        Toast.makeText(getContext(), text,
+                Toast.LENGTH_SHORT).show();
     }
 
     private boolean validar() {
@@ -301,15 +304,9 @@ public class ProcessCreationFragment extends Fragment {
             }
         }
 
-        if (checkedRadioButtonId == R.id.radioButtonDesenho) {
-            if (inputEspessuraCaneta.getText().toString().isEmpty()) {
-                listaIdCampoErro.add(inputEspessuraCaneta.getId());
-            }
-        }
-
         if (listaIdCampoErro.size() > 0) {
 
-            String mensagemErro = "Por favor preencha todos os campos obrigatórios";
+            String mensagemErro = getString(R.string.required_field_error);
 
             Toast.makeText(getContext(), mensagemErro, Toast.LENGTH_SHORT).show();
 
@@ -331,7 +328,6 @@ public class ProcessCreationFragment extends Fragment {
             int checkedRadioButtonId = radioGroupOperacao.getCheckedRadioButtonId();
             if (checkedRadioButtonId == R.id.radioButtonCorte) {
                 getView().findViewById(R.id.layoutCorte).setVisibility(View.VISIBLE);
-                limparCamposDesenho();
             }
 
             if (checkedRadioButtonId == R.id.radioButtonDesenho) {
@@ -341,13 +337,9 @@ public class ProcessCreationFragment extends Fragment {
         };
     }
 
-    private void limparCamposDesenho() {
-        inputEspessuraCaneta.setText("");
-    }
-
     private void limparCamposCorte() {
         inputProfundidadeLamina.setText("");
-        corLamina.setSelection(0);
+        bladeSpinner.setSelection(0);
         checkBoxIsTecido.setChecked(false);
     }
 

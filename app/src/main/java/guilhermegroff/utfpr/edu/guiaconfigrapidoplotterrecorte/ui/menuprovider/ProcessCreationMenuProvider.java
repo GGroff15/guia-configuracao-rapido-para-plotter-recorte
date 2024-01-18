@@ -26,12 +26,12 @@ public class ProcessCreationMenuProvider implements MenuProvider {
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menuItemSalvar) {
-            fragment.salvar(item);
+            fragment.save(item);
             return true;
         }
 
         if (item.getItemId() == R.id.menuItemLimpar) {
-            fragment.limpar(item);
+            fragment.clear(item);
             return true;
         }
         return false;

@@ -10,7 +10,7 @@ import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Blade;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Mat;
 import guilhermegroff.utfpr.edu.guiaconfigrapidoplotterrecorte.entidades.Processo;
 
-@Database(entities = {Blade.class, Processo.class, Mat.class}, version = 2, exportSchema = false)
+@Database(entities = {Blade.class, Processo.class, Mat.class}, version = 1, exportSchema = false)
 public abstract class PlotterDatabase extends RoomDatabase {
 
     public abstract LaminaDao laminaDao();
